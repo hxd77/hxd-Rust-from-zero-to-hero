@@ -1,5 +1,0 @@
-C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\variables\target\debug\deps\variables-91cf7b79ac0d151d.d: src\main.rs
-
-C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\variables\target\debug\deps\libvariables-91cf7b79ac0d151d.rmeta: src\main.rs
-
-src\main.rs:
