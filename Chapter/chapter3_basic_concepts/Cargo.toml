@@ -1,0 +1,8 @@
+[package]
+name = "Chapter3_basic_concepts"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+colored = "3.0.0"
+utils={path="../../utils"}
