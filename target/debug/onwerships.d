@@ -1,0 +1,1 @@
+C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\target\debug\onwerships.exe: C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\Chapter\chapter4_ownerships\src\main.rs C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\utils\src\lib.rs

@@ -20,6 +20,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "onwerships"
+version = "0.1.0"
+dependencies = [
+ "colored",
+ "utils",
+]
+
+[[package]]
 name = "utils"
 version = "0.1.0"
 dependencies = [

@@ -1,5 +1,5 @@
 use utils::*;
-use colored::{Colorize, control};
+use colored::{Colorize};
 
 pub fn run(){
     print_section_title("第三章：基础概念");    
