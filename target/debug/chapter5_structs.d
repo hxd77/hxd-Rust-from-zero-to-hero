@@ -1,0 +1,1 @@
+C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\target\debug\chapter5_structs.exe: C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\Chapter\chapter5_structs\src\main.rs C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\utils\src\lib.rs
