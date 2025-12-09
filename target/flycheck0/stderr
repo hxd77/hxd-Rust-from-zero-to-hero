@@ -1,12 +1,37 @@
-   0.054792700s  INFO prepare_target{force=false package_id=chapter5_structs v0.1.0 (C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\Chapter\chapter5_structs) target="chapter5_structs"}: cargo::core::compiler::fingerprint: stale: changed "C:\\Users\\DELL\\Desktop\\hxd-Rust-from-zero-to-hero\\Chapter\\chapter5_structs\\src\\main.rs"
-   0.054817200s  INFO prepare_target{force=false package_id=chapter5_structs v0.1.0 (C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\Chapter\chapter5_structs) target="chapter5_structs"}: cargo::core::compiler::fingerprint:           (vs) "C:\\Users\\DELL\\Desktop\\hxd-Rust-from-zero-to-hero\\target\\debug\\.fingerprint\\chapter5_structs-e0a03e6c03d808c3\\dep-bin-chapter5_structs"
-   0.054823100s  INFO prepare_target{force=false package_id=chapter5_structs v0.1.0 (C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\Chapter\chapter5_structs) target="chapter5_structs"}: cargo::core::compiler::fingerprint:                FileTime { seconds: 13409409931, nanos: 617921200 } < FileTime { seconds: 13409410001, nanos: 534795600 }
-   0.054913000s  INFO prepare_target{force=false package_id=chapter5_structs v0.1.0 (C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\Chapter\chapter5_structs) target="chapter5_structs"}: cargo::core::compiler::fingerprint: fingerprint dirty for chapter5_structs v0.1.0 (C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\Chapter\chapter5_structs)/Check { test: false }/TargetInner { name: "chapter5_structs", doc: true, ..: with_path("C:\\Users\\DELL\\Desktop\\hxd-Rust-from-zero-to-hero\\Chapter\\chapter5_structs\\src\\main.rs", Edition2024) }
-   0.054936000s  INFO prepare_target{force=false package_id=chapter5_structs v0.1.0 (C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\Chapter\chapter5_structs) target="chapter5_structs"}: cargo::core::compiler::fingerprint:     dirty: FsStatusOutdated(StaleItem(ChangedFile { reference: "C:\\Users\\DELL\\Desktop\\hxd-Rust-from-zero-to-hero\\target\\debug\\.fingerprint\\chapter5_structs-e0a03e6c03d808c3\\dep-bin-chapter5_structs", reference_mtime: FileTime { seconds: 13409409931, nanos: 617921200 }, stale: "C:\\Users\\DELL\\Desktop\\hxd-Rust-from-zero-to-hero\\Chapter\\chapter5_structs\\src\\main.rs", stale_mtime: FileTime { seconds: 13409410001, nanos: 534795600 } }))
-   0.056187700s  INFO prepare_target{force=false package_id=chapter5_structs v0.1.0 (C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\Chapter\chapter5_structs) target="chapter5_structs"}: cargo::core::compiler::fingerprint: stale: changed "C:\\Users\\DELL\\Desktop\\hxd-Rust-from-zero-to-hero\\Chapter\\chapter5_structs\\src\\main.rs"
-   0.056198400s  INFO prepare_target{force=false package_id=chapter5_structs v0.1.0 (C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\Chapter\chapter5_structs) target="chapter5_structs"}: cargo::core::compiler::fingerprint:           (vs) "C:\\Users\\DELL\\Desktop\\hxd-Rust-from-zero-to-hero\\target\\debug\\.fingerprint\\chapter5_structs-ca154aeb9d3f2e7d\\dep-test-bin-chapter5_structs"
-   0.056202700s  INFO prepare_target{force=false package_id=chapter5_structs v0.1.0 (C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\Chapter\chapter5_structs) target="chapter5_structs"}: cargo::core::compiler::fingerprint:                FileTime { seconds: 13409409931, nanos: 617921200 } < FileTime { seconds: 13409410001, nanos: 534795600 }
-   0.056288100s  INFO prepare_target{force=false package_id=chapter5_structs v0.1.0 (C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\Chapter\chapter5_structs) target="chapter5_structs"}: cargo::core::compiler::fingerprint: fingerprint dirty for chapter5_structs v0.1.0 (C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\Chapter\chapter5_structs)/Check { test: true }/TargetInner { name: "chapter5_structs", doc: true, ..: with_path("C:\\Users\\DELL\\Desktop\\hxd-Rust-from-zero-to-hero\\Chapter\\chapter5_structs\\src\\main.rs", Edition2024) }
-   0.056300600s  INFO prepare_target{force=false package_id=chapter5_structs v0.1.0 (C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\Chapter\chapter5_structs) target="chapter5_structs"}: cargo::core::compiler::fingerprint:     dirty: FsStatusOutdated(StaleItem(ChangedFile { reference: "C:\\Users\\DELL\\Desktop\\hxd-Rust-from-zero-to-hero\\target\\debug\\.fingerprint\\chapter5_structs-ca154aeb9d3f2e7d\\dep-test-bin-chapter5_structs", reference_mtime: FileTime { seconds: 13409409931, nanos: 617921200 }, stale: "C:\\Users\\DELL\\Desktop\\hxd-Rust-from-zero-to-hero\\Chapter\\chapter5_structs\\src\\main.rs", stale_mtime: FileTime { seconds: 13409410001, nanos: 534795600 } }))
-    Checking chapter5_structs v0.1.0 (C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\Chapter\chapter5_structs)
-    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.15s
+   0.015134400s  INFO prepare_target{force=false package_id=chapter6_enums v0.1.0 (C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\Chapter\chapter6_enums) target="chapter6_enums"}: cargo::core::compiler::fingerprint: fingerprint error for chapter6_enums v0.1.0 (C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\Chapter\chapter6_enums)/Check { test: false }/TargetInner { name: "chapter6_enums", doc: true, ..: with_path("C:\\Users\\DELL\\Desktop\\hxd-Rust-from-zero-to-hero\\Chapter\\chapter6_enums\\src\\main.rs", Edition2024) }
+   0.015192600s  INFO prepare_target{force=false package_id=chapter6_enums v0.1.0 (C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\Chapter\chapter6_enums) target="chapter6_enums"}: cargo::core::compiler::fingerprint:     err: failed to read `C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\target\debug\.fingerprint\chapter6_enums-43b791e57321103b\bin-chapter6_enums`
+
+Caused by:
+    系统找不到指定的文件。 (os error 2)
+
+Stack backtrace:
+   0: git_midx_writer_dump
+   1: git_midx_writer_dump
+   2: git_midx_writer_dump
+   3: git_midx_writer_dump
+   4: git_filter_source_repo
+   5: git_filter_source_repo
+   6: git_filter_source_repo
+   7: git_filter_source_repo
+   8: git_filter_source_repo
+   9: git_filter_source_repo
+  10: git_filter_source_repo
+  11: git_libgit2_prerelease
+  12: <unknown>
+  13: <unknown>
+  14: <unknown>
+  15: <unknown>
+  16: git_midx_writer_dump
+  17: git_filter_source_repo
+  18: git_midx_writer_dump
+  19: BaseThreadInitThunk
+  20: RtlUserThreadStart
+   0.022906000s  INFO prepare_target{force=false package_id=chapter6_enums v0.1.0 (C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\Chapter\chapter6_enums) target="chapter6_enums"}: cargo::core::compiler::fingerprint: stale: changed "C:\\Users\\DELL\\Desktop\\hxd-Rust-from-zero-to-hero\\Chapter\\chapter6_enums\\src\\main.rs"
+   0.022919200s  INFO prepare_target{force=false package_id=chapter6_enums v0.1.0 (C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\Chapter\chapter6_enums) target="chapter6_enums"}: cargo::core::compiler::fingerprint:           (vs) "C:\\Users\\DELL\\Desktop\\hxd-Rust-from-zero-to-hero\\target\\debug\\.fingerprint\\chapter6_enums-e09c8c6d8e537023\\dep-test-bin-chapter6_enums"
+   0.022923800s  INFO prepare_target{force=false package_id=chapter6_enums v0.1.0 (C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\Chapter\chapter6_enums) target="chapter6_enums"}: cargo::core::compiler::fingerprint:                FileTime { seconds: 13409758659, nanos: 609021000 } < FileTime { seconds: 13409761089, nanos: 292274500 }
+   0.023005600s  INFO prepare_target{force=false package_id=chapter6_enums v0.1.0 (C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\Chapter\chapter6_enums) target="chapter6_enums"}: cargo::core::compiler::fingerprint: fingerprint dirty for chapter6_enums v0.1.0 (C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\Chapter\chapter6_enums)/Check { test: true }/TargetInner { name: "chapter6_enums", doc: true, ..: with_path("C:\\Users\\DELL\\Desktop\\hxd-Rust-from-zero-to-hero\\Chapter\\chapter6_enums\\src\\main.rs", Edition2024) }
+   0.023024300s  INFO prepare_target{force=false package_id=chapter6_enums v0.1.0 (C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\Chapter\chapter6_enums) target="chapter6_enums"}: cargo::core::compiler::fingerprint:     dirty: FsStatusOutdated(StaleItem(ChangedFile { reference: "C:\\Users\\DELL\\Desktop\\hxd-Rust-from-zero-to-hero\\target\\debug\\.fingerprint\\chapter6_enums-e09c8c6d8e537023\\dep-test-bin-chapter6_enums", reference_mtime: FileTime { seconds: 13409758659, nanos: 609021000 }, stale: "C:\\Users\\DELL\\Desktop\\hxd-Rust-from-zero-to-hero\\Chapter\\chapter6_enums\\src\\main.rs", stale_mtime: FileTime { seconds: 13409761089, nanos: 292274500 } }))
+    Checking chapter6_enums v0.1.0 (C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\Chapter\chapter6_enums)
+error: could not compile `chapter6_enums` (bin "chapter6_enums") due to 3 previous errors; 3 warnings emitted
+warning: build failed, waiting for other jobs to finish...
+error: could not compile `chapter6_enums` (bin "chapter6_enums" test) due to 3 previous errors; 3 warnings emitted

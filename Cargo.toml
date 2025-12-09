@@ -4,5 +4,6 @@ members=[
     "utils",
     "Chapter/chapter3_basic_concepts",
     "Chapter/chapter4_ownerships", 
-    "Chapter/chapter5_structs",
+    "Chapter/chapter5_structs", 
+    "Chapter/chapter6_enums",
 ]
