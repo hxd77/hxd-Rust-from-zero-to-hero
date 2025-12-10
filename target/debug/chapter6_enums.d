@@ -1,1 +1,1 @@
-C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\target\debug\chapter6_enums.exe: C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\Chapter\chapter6_enums\src\main.rs
+C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\target\debug\chapter6_enums.exe: C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\Chapter\chapter6_enums\src\main.rs C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\utils\src\lib.rs
