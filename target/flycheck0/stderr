@@ -1,35 +1,14 @@
-   0.061722800s  INFO prepare_target{force=false package_id=chapter6_enums v0.1.0 (C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\Chapter\chapter6_enums) target="chapter6_enums"}: cargo::core::compiler::fingerprint: fingerprint error for chapter6_enums v0.1.0 (C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\Chapter\chapter6_enums)/Check { test: false }/TargetInner { name: "chapter6_enums", doc: true, ..: with_path("C:\\Users\\DELL\\Desktop\\hxd-Rust-from-zero-to-hero\\Chapter\\chapter6_enums\\src\\main.rs", Edition2024) }
-   0.061768700s  INFO prepare_target{force=false package_id=chapter6_enums v0.1.0 (C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\Chapter\chapter6_enums) target="chapter6_enums"}: cargo::core::compiler::fingerprint:     err: failed to read `C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\target\debug\.fingerprint\chapter6_enums-43b791e57321103b\bin-chapter6_enums`
-
-Caused by:
-    系统找不到指定的文件。 (os error 2)
-
-Stack backtrace:
-   0: git_midx_writer_dump
-   1: git_midx_writer_dump
-   2: git_midx_writer_dump
-   3: git_midx_writer_dump
-   4: git_filter_source_repo
-   5: git_filter_source_repo
-   6: git_filter_source_repo
-   7: git_filter_source_repo
-   8: git_filter_source_repo
-   9: git_filter_source_repo
-  10: git_filter_source_repo
-  11: git_libgit2_prerelease
-  12: <unknown>
-  13: <unknown>
-  14: <unknown>
-  15: <unknown>
-  16: git_midx_writer_dump
-  17: git_filter_source_repo
-  18: git_midx_writer_dump
-  19: BaseThreadInitThunk
-  20: RtlUserThreadStart
-   0.068918500s  INFO prepare_target{force=false package_id=chapter6_enums v0.1.0 (C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\Chapter\chapter6_enums) target="chapter6_enums"}: cargo::core::compiler::fingerprint: stale: changed "C:\\Users\\DELL\\Desktop\\hxd-Rust-from-zero-to-hero\\Chapter\\chapter6_enums\\src\\main.rs"
-   0.068932500s  INFO prepare_target{force=false package_id=chapter6_enums v0.1.0 (C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\Chapter\chapter6_enums) target="chapter6_enums"}: cargo::core::compiler::fingerprint:           (vs) "C:\\Users\\DELL\\Desktop\\hxd-Rust-from-zero-to-hero\\target\\debug\\.fingerprint\\chapter6_enums-e09c8c6d8e537023\\dep-test-bin-chapter6_enums"
-   0.068937000s  INFO prepare_target{force=false package_id=chapter6_enums v0.1.0 (C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\Chapter\chapter6_enums) target="chapter6_enums"}: cargo::core::compiler::fingerprint:                FileTime { seconds: 13409758659, nanos: 609021000 } < FileTime { seconds: 13409846473, nanos: 215545200 }
-   0.069077100s  INFO prepare_target{force=false package_id=chapter6_enums v0.1.0 (C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\Chapter\chapter6_enums) target="chapter6_enums"}: cargo::core::compiler::fingerprint: fingerprint dirty for chapter6_enums v0.1.0 (C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\Chapter\chapter6_enums)/Check { test: true }/TargetInner { name: "chapter6_enums", doc: true, ..: with_path("C:\\Users\\DELL\\Desktop\\hxd-Rust-from-zero-to-hero\\Chapter\\chapter6_enums\\src\\main.rs", Edition2024) }
-   0.069093900s  INFO prepare_target{force=false package_id=chapter6_enums v0.1.0 (C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\Chapter\chapter6_enums) target="chapter6_enums"}: cargo::core::compiler::fingerprint:     dirty: FsStatusOutdated(StaleItem(ChangedFile { reference: "C:\\Users\\DELL\\Desktop\\hxd-Rust-from-zero-to-hero\\target\\debug\\.fingerprint\\chapter6_enums-e09c8c6d8e537023\\dep-test-bin-chapter6_enums", reference_mtime: FileTime { seconds: 13409758659, nanos: 609021000 }, stale: "C:\\Users\\DELL\\Desktop\\hxd-Rust-from-zero-to-hero\\Chapter\\chapter6_enums\\src\\main.rs", stale_mtime: FileTime { seconds: 13409846473, nanos: 215545200 } }))
-    Checking chapter6_enums v0.1.0 (C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\Chapter\chapter6_enums)
-    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.20s
+   0.014155800s  INFO prepare_target{force=false package_id=chapter7_modules_crates v0.1.0 (C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\Chapter\chapter7_modules_crates) target="chapter7_modules_crates"}: cargo::core::compiler::fingerprint: stale: changed "C:\\Users\\DELL\\Desktop\\hxd-Rust-from-zero-to-hero\\Chapter\\chapter7_modules_crates\\src\\main.rs"
+   0.014183100s  INFO prepare_target{force=false package_id=chapter7_modules_crates v0.1.0 (C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\Chapter\chapter7_modules_crates) target="chapter7_modules_crates"}: cargo::core::compiler::fingerprint:           (vs) "C:\\Users\\DELL\\Desktop\\hxd-Rust-from-zero-to-hero\\target\\debug\\.fingerprint\\chapter7_modules_crates-91b8534d13567262\\dep-bin-chapter7_modules_crates"
+   0.014188900s  INFO prepare_target{force=false package_id=chapter7_modules_crates v0.1.0 (C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\Chapter\chapter7_modules_crates) target="chapter7_modules_crates"}: cargo::core::compiler::fingerprint:                FileTime { seconds: 13409925580, nanos: 671728900 } < FileTime { seconds: 13410013872, nanos: 993978500 }
+   0.014278800s  INFO prepare_target{force=false package_id=chapter7_modules_crates v0.1.0 (C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\Chapter\chapter7_modules_crates) target="chapter7_modules_crates"}: cargo::core::compiler::fingerprint: fingerprint dirty for chapter7_modules_crates v0.1.0 (C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\Chapter\chapter7_modules_crates)/Check { test: false }/TargetInner { name: "chapter7_modules_crates", doc: true, ..: with_path("C:\\Users\\DELL\\Desktop\\hxd-Rust-from-zero-to-hero\\Chapter\\chapter7_modules_crates\\src\\main.rs", Edition2024) }
+   0.014305600s  INFO prepare_target{force=false package_id=chapter7_modules_crates v0.1.0 (C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\Chapter\chapter7_modules_crates) target="chapter7_modules_crates"}: cargo::core::compiler::fingerprint:     dirty: FsStatusOutdated(StaleItem(ChangedFile { reference: "C:\\Users\\DELL\\Desktop\\hxd-Rust-from-zero-to-hero\\target\\debug\\.fingerprint\\chapter7_modules_crates-91b8534d13567262\\dep-bin-chapter7_modules_crates", reference_mtime: FileTime { seconds: 13409925580, nanos: 671728900 }, stale: "C:\\Users\\DELL\\Desktop\\hxd-Rust-from-zero-to-hero\\Chapter\\chapter7_modules_crates\\src\\main.rs", stale_mtime: FileTime { seconds: 13410013872, nanos: 993978500 } }))
+   0.015354600s  INFO prepare_target{force=false package_id=chapter7_modules_crates v0.1.0 (C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\Chapter\chapter7_modules_crates) target="chapter7_modules_crates"}: cargo::core::compiler::fingerprint: stale: changed "C:\\Users\\DELL\\Desktop\\hxd-Rust-from-zero-to-hero\\Chapter\\chapter7_modules_crates\\src\\main.rs"
+   0.015365100s  INFO prepare_target{force=false package_id=chapter7_modules_crates v0.1.0 (C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\Chapter\chapter7_modules_crates) target="chapter7_modules_crates"}: cargo::core::compiler::fingerprint:           (vs) "C:\\Users\\DELL\\Desktop\\hxd-Rust-from-zero-to-hero\\target\\debug\\.fingerprint\\chapter7_modules_crates-c693e443ab4e7dc7\\dep-test-bin-chapter7_modules_crates"
+   0.015369200s  INFO prepare_target{force=false package_id=chapter7_modules_crates v0.1.0 (C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\Chapter\chapter7_modules_crates) target="chapter7_modules_crates"}: cargo::core::compiler::fingerprint:                FileTime { seconds: 13409925580, nanos: 671728900 } < FileTime { seconds: 13410013872, nanos: 993978500 }
+   0.015423900s  INFO prepare_target{force=false package_id=chapter7_modules_crates v0.1.0 (C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\Chapter\chapter7_modules_crates) target="chapter7_modules_crates"}: cargo::core::compiler::fingerprint: fingerprint dirty for chapter7_modules_crates v0.1.0 (C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\Chapter\chapter7_modules_crates)/Check { test: true }/TargetInner { name: "chapter7_modules_crates", doc: true, ..: with_path("C:\\Users\\DELL\\Desktop\\hxd-Rust-from-zero-to-hero\\Chapter\\chapter7_modules_crates\\src\\main.rs", Edition2024) }
+   0.015435200s  INFO prepare_target{force=false package_id=chapter7_modules_crates v0.1.0 (C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\Chapter\chapter7_modules_crates) target="chapter7_modules_crates"}: cargo::core::compiler::fingerprint:     dirty: FsStatusOutdated(StaleItem(ChangedFile { reference: "C:\\Users\\DELL\\Desktop\\hxd-Rust-from-zero-to-hero\\target\\debug\\.fingerprint\\chapter7_modules_crates-c693e443ab4e7dc7\\dep-test-bin-chapter7_modules_crates", reference_mtime: FileTime { seconds: 13409925580, nanos: 671728900 }, stale: "C:\\Users\\DELL\\Desktop\\hxd-Rust-from-zero-to-hero\\Chapter\\chapter7_modules_crates\\src\\main.rs", stale_mtime: FileTime { seconds: 13410013872, nanos: 993978500 } }))
+    Checking chapter7_modules_crates v0.1.0 (C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\Chapter\chapter7_modules_crates)
+error: could not compile `chapter7_modules_crates` (bin "chapter7_modules_crates") due to 7 previous errors; 1 warning emitted
+warning: build failed, waiting for other jobs to finish...
+error: could not compile `chapter7_modules_crates` (bin "chapter7_modules_crates" test) due to 7 previous errors; 1 warning emitted

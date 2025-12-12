@@ -1,5 +1,7 @@
 use std::path::absolute;
 
+use bank::Account;
+use company::hr::{self, Employee};
 use library::Category;
 use utils::*;
 use colored::Colorize;
@@ -263,6 +265,249 @@ fn super_and_self_keywords()
     println!("- super: 访问父模块");
     println!("- self: 引用当前模块");
     println!("- crate: 引用根模块");
+}
+
+fn use_keyword()
+{
+    print_example_title("7.3 use关键字");
+
+    //基本use语句
+    basic_use_statements();
+
+    //use别名
+    use_aliases();
+
+    //重新导出
+    re_exports();
+
+    pause();
+}
+
+fn basic_use_statements()
+{
+    println!("\n{}","基本use语句: ".blue().bold());
+
+    mod collections{
+        pub mod list{
+            pub fn create_vector()
+            {
+                println!("创建向量");
+            }
+            
+            pub fn sort_vecotr()
+            {
+                println!("排序向量");
+            }
+        }
+        pub mod map{
+            pub fn create_hashmap() {
+                println!("创建哈希映射");
+            }
+        }
+    }
+    
+    //引入特定函数
+    use collections::list::create_vector;
+    use collections::list::sort_vecotr;
+    use collections::map::create_hashmap;
+
+    create_vector();
+    sort_vecotr();
+    create_hashmap();
+
+    //引入模块
+    use collections::list;
+    list::create_vector();
+
+    println!("\nuse语句优势");
+    println!("- 简化路径");
+    println!("- 提高可读性");
+    println!("- 避免重复");
+}
+
+fn use_aliases()
+{
+    println!("\n{}","use别名".blue().bold());
+
+    mod graphic{
+        pub mod d2{
+            pub fn draw_rectangle()
+            {
+                println!("绘制2D矩形");
+            }
+        }
+        pub mod d3{
+            pub fn draw_rectangle(){ //不同模块函数居然可以同名
+                println!("绘制3D矩形");
+            }
+        }
+    }
+
+    //使用别名解决命名冲突
+    use graphic::d2::draw_rectangle as draw_2d_rect;
+    use graphic::d3::draw_rectangle as draw_3d_rect;
+
+    draw_2d_rect();
+    draw_3d_rect();
+
+    println!("\n别名用途: ");
+    println!("- 解决命名冲突");
+    println!("- 缩短长名称");
+    println!("- 提高代码清晰度");
+}
+
+fn re_exports()
+{
+    println!("\n{}","重新导出".blue().bold());
+
+    mod api{
+        mod internal{
+            pub fn process_data(){
+                println!("内部数据处理");
+            }
+
+            pub fn validate_input(){
+                println!("输入验证");
+            }
+        }
+
+    //重新导出
+    pub use internal::process_data;
+    pub use internal::validate_input as validate;
+    }
+
+    //外部用户可以访问直接使用
+    api::process_data();
+    api::validate();
+
+    println!("\n重新导出作用: ");
+    println!("- 简化公共API");
+    println!("- 隐藏内部结构");
+    println!("- 提供便捷接口");
+}
+
+fn visibility_control(){
+    print_example_title("7.4 可见性控制");
+
+    //pub 关键字用法
+    pub_keyword_usage();
+
+    //限制可见性
+    restricted_visibility();
+
+    pause();
+}
+
+fn pub_keyword_usage()
+{
+    println!("\n{}","pub关键字用法: ".blue().bold());
+
+    mod bank{
+        pub struct Account{
+            pub id:u32,
+            balance:f64, //私有
+        }
+
+        impl Account{
+            pub fn new(id:u32,initial_balance:f64)->Account{
+                Account{
+                    id,
+                    balance:initial_balance,
+                }
+            }
+        
+            pub fn deposit(&mut self,amount:f64) //&mut 可变引用可以修改结构体字段
+            {
+                self.balance+=amount;
+                println!("存款{:2}, 余额: {:2}",amount,self.balance); //{:2}输出占2个宽度
+            }
+
+            pub fn get_balance(&self)->f64{
+                self.balance
+            }
+
+            fn calculate_interest(&self)->f64{
+                self.balance*0.5 //私有方法
+            }
+        }
+        
+        pub enum TransactionType{
+            Deposit,
+            Withdrawal,
+            Transfer,
+        }
+    }
+
+    let mut account=bank::Account::new(1001, 1000.0);
+    println!("账户ID: {}",account.id);
+    account.deposit(500.0);
+    println!("当前余额: {:2}",account.get_balance());
+
+    let transaction=bank::TransactionType::Deposit;
+    match transaction{
+        bank::TransactionType::Deposit=>println!("存款交易"),
+        bank::TransactionType::Withdrawal=>println!("取款交易"),
+        bank::TransactionType::Transfer=>println!("转账交易"),
+    }
+
+    println!("\npub可见性");
+    println!("- 结构体: 字段独立控制");
+    println!("- 枚举: 变体自动公开");
+    println!("- 方法: 独立控制");
+}
+
+fn restricted_visibility(){
+    println!("\n{}","限制可见性: ".blue().bold());
+
+    mod company{
+        pub mod hr{
+            pub struct Employee{
+                pub name:String,
+                pub(crate) id:u32, //字段id只对当前crate内可见
+                pub(super) salary:f64, //只对父模块可见
+                department: String, //私有
+            }
+
+            impl Employee{
+                pub fn new(name:String,id :u32,salary:f64,department:String)->Employee{
+                    Employee{name,id,salary,department}
+                }
+
+                pub fn get_department(&self)->&str{
+                    &self.department
+                }
+
+                pub(crate) fn get_id(&self)->u32{
+                    self.id
+                }
+            }
+        }
+       pub fn process_employee(emp:&hr::Employee)
+       {
+           println!("处理员工: {}",emp.name);
+           println!("薪资: {:.2}",emp.salary); //可访问,因为是子模块
+       }
+    }
+
+    let employee=company::hr::Employee::new(
+        "张三".to_string(), 
+        12345, 
+        50000.0, 
+        "工程部".to_string()
+    );
+
+    println!("员工姓名: {}",employee.name);
+    println!("员工ID: {}",employee.get_id()); //crate内可见
+    println!("员工部门: {}",employee.get_department());
+
+    company::process_employee(&employee);
+
+    println!("\n可见性级别");
+    println!("- pub: 完全公开");
+    println!("- pub(crate): crate内可见");
+    println!("- pub(super): 父模块可见");
+    println!("- pub(self): 当前模块可见");
+    println!("- 无修饰符: 私有");
 }
 
 
