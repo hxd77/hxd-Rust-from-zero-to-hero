@@ -6,5 +6,10 @@ members=[
     "Chapter/chapter4_ownerships", 
     "Chapter/chapter5_structs", 
     "Chapter/chapter6_enums", 
-    "Chapter/chapter7_modules_crates",
+    "Chapter/chapter7_modules_crates", 
+    "Chapter/chapter8_collections",
+]
+exclude=[
+    "arkwork-examples",
+    "r1cs-tutorial",
 ]

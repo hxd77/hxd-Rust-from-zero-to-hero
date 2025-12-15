@@ -1,8 +1,3 @@
-use std::path::absolute;
-
-use bank::Account;
-use company::hr::{self, Employee};
-use library::Category;
 use utils::*;
 use colored::Colorize;
 
@@ -510,7 +505,442 @@ fn restricted_visibility(){
     println!("- 无修饰符: 私有");
 }
 
+fn packages_and_crates()
+{
+    print_example_title("7.5 包和crate");
 
+    //包结构
+    packages_structure();
+
+    //二进制和库crate
+    binary_and_library_crates();
+
+    //工作空间
+    workspaces();
+
+    pause();
+}
+
+fn packages_structure()
+{
+    print!("\n{}","包结构".blue().bold());
+
+    println!("典型的Rust包结构");
+    println!("my_package/");
+    println!("├── Cargo.toml");
+    println!("├── src/");
+    println!("│   ├── main.rs        # 二进制crate入口");
+    println!("│   ├── lib.rs         # 库crate入口");
+    println!("│   └── bin/           # 额外二进制文件");
+    println!("│       └── helper.rs");
+    println!("├── tests/             # 集成测试");
+    println!("│   └── integration_test.rs");
+    println!("├── examples/          # 示例");
+    println!("│   └── basic_usage.rs");
+    println!("└── benches/           # 基准测试");
+    println!("    └── benchmark.rs");
+    
+    println!("\n包和crate概念:");
+    println!("- 包(Package): Cargo.toml + 源代码");
+    println!("- Crate: 编译单元");
+    println!("- 二进制crate: 可执行程序");
+    println!("- 库crate: 代码库");
+}
+
+fn binary_and_library_crates()
+{
+    println!("\n{}","二进制和库crate: ".blue().bold());
+
+    //模拟库crate功能
+    mod my_library{
+        use std::result;
+
+        pub struct Calulator;
+
+        impl Calulator {
+            pub fn add(a:i32,b:i32)->i32{
+                a+b
+            }
+
+            pub fn multiply(a:i32,b:i32)->i32{
+                a*b
+            }
+        }
+
+        pub mod utils{
+            pub fn format_results(result:i32)->String{
+                format!("计算结果: {}",result) //等价let s = String::from("计算结果: 42");
+            }
+        }
+    }
+    //使用库功能
+    let result=my_library::Calulator::add(5,3);
+    println!("{}",my_library::utils::format_results(result));
+
+    let result=my_library::Calulator::multiply(4, 7);
+    println!("{}",my_library::utils::format_results(result));
+    
+    println!("\nCargo.toml示例:");
+    println!("[package]");
+    println!("name = \"my_package\"");
+    println!("version = \"0.1.0\"");
+    println!("edition = \"2021\"");
+    println!("");
+    println!("[dependencies]");
+    println!("serde = \"1.0\"");
+    println!("tokio = {{ version = \"1.0\", features = [\"full\"] }}");
+    
+    println!("\ncrate类型:");
+    println!("- bin: 可执行文件");
+    println!("- lib: 库文件");
+    println!("- 混合: 同时包含");
+}
+
+fn workspaces()
+{
+    println!("\n{}", "工作空间：".blue().bold());
+    
+    println!("工作空间结构:");
+    println!("my_workspace/");
+    println!("├── Cargo.toml         # 工作空间配置");
+    println!("├── Cargo.lock");
+    println!("├── frontend/");
+    println!("│   ├── Cargo.toml");
+    println!("│   └── src/");
+    println!("│       └── main.rs");
+    println!("├── backend/");
+    println!("│   ├── Cargo.toml");
+    println!("│   └── src/");
+    println!("│       └── main.rs");
+    println!("└── shared/");
+    println!("    ├── Cargo.toml");
+    println!("    └── src/");
+    println!("        └── lib.rs");
+    
+    println!("\n工作空间Cargo.toml:");
+    println!("[workspace]");
+    println!("members = [");
+    println!("    \"frontend\",");
+    println!("    \"backend\",");
+    println!("    \"shared\",");
+    println!("]");
+    
+    println!("\n工作空间优势:");
+    println!("- 统一依赖管理");
+    println!("- 共享Cargo.lock");
+    println!("- 批量操作");
+    println!("- 代码共享");
+}
+
+fn filesystem_organization()
+{
+    print_example_title("7.6 文件系统组织");
+
+    //模块文件分离
+    module_file_separation();
+
+    //目录结构最佳实践
+    directory_structure_best_practices();
+
+    pause();
+}
+
+fn module_file_separation()
+{
+    println!("\n{}","模块文件分离: ".blue().bold());
+
+    println!("模块组织方式:");
+    println!("1. 单文件模块:");
+    println!("   src/");
+    println!("   ├── lib.rs");
+    println!("   └── network.rs      # mod network;");
+    
+    println!("\n2. 目录模块:");
+    println!("   src/");
+    println!("   ├── lib.rs");
+    println!("   └── network/");
+    println!("       ├── mod.rs       # 模块入口");
+    println!("       ├── server.rs");
+    println!("       └── client.rs");
+    
+    println!("\n3. 现代组织方式:");
+    println!("   src/");
+    println!("   ├── lib.rs");
+    println!("   ├── network.rs       # 模块入口");
+    println!("   └── network/");
+    println!("       ├── server.rs");
+    println!("       └── client.rs");
+    
+    println!("\n模块声明:");
+    println!("// 在lib.rs或main.rs中");
+    println!("mod network;              // 引入network.rs");
+    println!("mod database {{           // 内联模块");
+    println!("    pub fn connect() {{");
+    println!("        // 连接数据库");
+    println!("    }}");
+    println!("}}");
+}
+
+fn directory_structure_best_practices()
+{
+    println!("\n{}","目录结构最佳实践: ".blue().bold());
+
+     println!("推荐项目结构:");
+    println!("my_project/");
+    println!("├── Cargo.toml");
+    println!("├── README.md");
+    println!("├── LICENSE");
+    println!("├── src/");
+    println!("│   ├── main.rs          # 或 lib.rs");
+    println!("│   ├── config/          # 配置相关");
+    println!("│   │   ├── mod.rs");
+    println!("│   │   └── settings.rs");
+    println!("│   ├── models/          # 数据模型");
+    println!("│   │   ├── mod.rs");
+    println!("│   │   ├── user.rs");
+    println!("│   │   └── post.rs");
+    println!("│   ├── handlers/        # 请求处理");
+    println!("│   │   ├── mod.rs");
+    println!("│   │   └── api.rs");
+    println!("│   └── utils/           # 工具函数");
+    println!("│       ├── mod.rs");
+    println!("│       └── helpers.rs");
+    println!("├── tests/               # 集成测试");
+    println!("├── examples/            # 使用示例");
+    println!("└── docs/                # 文档");
+    
+    println!("\n组织原则:");
+    println!("- 按功能分组");
+    println!("- 保持层次清晰");
+    println!("- 避免过深嵌套");
+    println!("- 使用有意义的名称");
+}
+
+fn practical_examples(){
+    println!("7.7 实际应用案例");
+
+    //库设计案例
+    library_design_example();
+
+    //API模块组织
+    api_module_organization();
+
+    pause();
+}
+fn library_design_example() {
+    println!("\n{}", "库设计案例：".blue().bold());
+    
+    // 设计一个简单的HTTP客户端库
+    mod http_client {
+        pub mod request {
+            pub struct HttpRequest {
+                pub url: String,
+                pub method: String,
+                headers: std::collections::HashMap<String, String>,
+            }
+            
+            impl HttpRequest {
+                pub fn new(method: &str, url: &str) -> Self {
+                    HttpRequest {
+                        url: url.to_string(),
+                        method: method.to_string(),
+                        headers: std::collections::HashMap::new(),
+                    }
+                }
+                
+                pub fn add_header(&mut self, key: &str, value: &str) {
+                    self.headers.insert(key.to_string(), value.to_string());
+                }
+                
+                pub fn get_headers(&self) -> &std::collections::HashMap<String, String> {
+                    &self.headers
+                }
+            }
+        }
+        
+        pub mod response {
+            pub struct HttpResponse {
+                pub status: u16,
+                pub body: String,
+            }
+            
+            impl HttpResponse {
+                pub fn new(status: u16, body: String) -> Self {
+                    HttpResponse { status, body }
+                }
+                
+                pub fn is_success(&self) -> bool {
+                    self.status >= 200 && self.status < 300
+                }
+            }
+        }
+        
+        pub mod client {
+            use super::{request::HttpRequest, response::HttpResponse};
+            
+            pub struct Client {
+                base_url: String,
+            }
+            
+            impl Client {
+                pub fn new(base_url: &str) -> Self {
+                    Client {
+                        base_url: base_url.to_string(),
+                    }
+                }
+                
+                pub fn send(&self, request: &HttpRequest) -> HttpResponse {
+                    // 模拟发送请求
+                    println!("发送 {} 请求到: {}{}", request.method, self.base_url, request.url);
+                    
+                    for (key, value) in request.get_headers() {
+                        println!("Header: {}: {}", key, value);
+                    }
+                    
+                    HttpResponse::new(200, "响应内容".to_string())
+                }
+            }
+        }
+        
+        // 便捷函数
+        pub fn get(url: &str) -> response::HttpResponse {
+            let client = client::Client::new("https://api.example.com");
+            let request = request::HttpRequest::new("GET", url);
+            client.send(&request)
+        }
+    }
+    
+    // 使用库
+    let client = http_client::client::Client::new("https://jsonplaceholder.typicode.com");
+    let mut request = http_client::request::HttpRequest::new("GET", "/posts/1");
+    request.add_header("Accept", "application/json");
+    
+    let response = client.send(&request);
+    println!("响应状态: {}", response.status);
+    println!("响应成功: {}", response.is_success());
+    
+    // 使用便捷函数
+    let simple_response = http_client::get("/users/1");
+    println!("简单请求状态: {}", simple_response.status);
+    
+    println!("\n库设计考虑:");
+    println!("- 清晰的公共API");
+    println!("- 隐藏实现细节");
+    println!("- 提供便捷函数");
+    println!("- 合理的模块划分");
+}
+
+
+fn api_module_organization() {
+    println!("\n{}", "API模块组织：".blue().bold());
+    
+    // Web API模块结构
+    mod web_api {
+        pub mod handlers {
+            pub mod users {
+                pub fn get_user(id: u32) -> String {
+                    format!("用户信息: ID {}", id)
+                }
+                
+                pub fn create_user(name: &str) -> String {
+                    format!("创建用户: {}", name)
+                }
+                
+                pub fn update_user(id: u32, name: &str) -> String {
+                    format!("更新用户 {}: {}", id, name)
+                }
+            }
+            
+            pub mod posts {
+                pub fn get_posts() -> Vec<String> {
+                    vec!["文章1".to_string(), "文章2".to_string()]
+                }
+                
+                pub fn create_post(title: &str, content: &str) -> String {
+                    format!("创建文章: {} - {}", title, content)
+                }
+            }
+        }
+        
+        pub mod middleware {
+            pub fn auth_middleware() {
+                println!("认证中间件");
+            }
+            
+            pub fn logging_middleware() {
+                println!("日志中间件");
+            }
+        }
+        
+        pub mod models {
+            #[derive(Debug)]
+            pub struct User {
+                pub id: u32,
+                pub name: String,
+                pub email: String,
+            }
+            
+            impl User {
+                pub fn new(id: u32, name: String, email: String) -> Self {
+                    User { id, name, email }
+                }
+            }
+            
+            #[derive(Debug)]
+            pub struct Post {
+                pub id: u32,
+                pub title: String,
+                pub content: String,
+                pub author_id: u32,
+            }
+        }
+        
+        pub mod routes {
+            use super::handlers;
+            use super::middleware;
+            
+            pub fn setup_routes() {
+                println!("设置路由:");
+                
+                middleware::auth_middleware();
+                middleware::logging_middleware();
+                
+                // 用户路由
+                println!("GET /users/:id -> {}", handlers::users::get_user(1));
+                println!("POST /users -> {}", handlers::users::create_user("新用户"));
+                
+                // 文章路由
+                let posts = handlers::posts::get_posts();
+                println!("GET /posts -> {:?}", posts);
+                println!("POST /posts -> {}", handlers::posts::create_post("新文章", "内容"));
+            }
+        }
+    }
+    
+    // 初始化API
+    web_api::routes::setup_routes();
+    
+    // 创建模型实例
+    let user = web_api::models::User::new(1, "张三".to_string(), "zhang@example.com".to_string());
+    println!("创建用户: {:?}", user);
+    
+    let post = web_api::models::Post {
+        id: 1,
+        title: "Rust模块系统".to_string(),
+        content: "详细介绍Rust的模块系统".to_string(),
+        author_id: user.id,
+    };
+    println!("创建文章: {:?}", post);
+    
+    println!("\nAPI组织原则:");
+    println!("- handlers: 请求处理逻辑");
+    println!("- models: 数据模型定义");
+    println!("- middleware: 中间件功能");
+    println!("- routes: 路由配置");
+    println!("- utils: 辅助工具");
+}
+
+#[allow(dead_code)]//即使这段代码现在没被用到，也不要报“未使用代码”的警告。
 fn main() {
     run();
 }

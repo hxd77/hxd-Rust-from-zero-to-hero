@@ -1,0 +1,1 @@
+C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\target\debug\chapter7_modules_crates.exe: C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\Chapter\chapter7_modules_crates\src\main.rs C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\utils\src\lib.rs
