@@ -11,6 +11,22 @@ dependencies = [
 ]
 
 [[package]]
+name = "chapter10_generics_traits"
+version = "0.1.0"
+dependencies = [
+ "colored",
+ "utils",
+]
+
+[[package]]
+name = "chapter11_automated_testing"
+version = "0.1.0"
+dependencies = [
+ "colored",
+ "utils",
+]
+
+[[package]]
 name = "chapter5_structs"
 version = "0.1.0"
 dependencies = [

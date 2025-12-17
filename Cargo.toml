@@ -7,9 +7,10 @@ members=[
     "Chapter/chapter5_structs", 
     "Chapter/chapter6_enums", 
     "Chapter/chapter7_modules_crates", 
-    "Chapter/chapter8_collections",
+    "Chapter/chapter8_collections", "Chapter/chapter10_generics_traits", "Chapter/chapter11_automated_testing",
 ]
 exclude=[
     "arkwork-examples",
     "r1cs-tutorial",
+    "HyperPlonk_example_by_hxd",
 ]

@@ -1,60 +1,27 @@
-   0.016104400s  INFO prepare_target{force=false package_id=chapter8_collections v0.1.0 (C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\Chapter\chapter8_collections) target="chapter8_collections"}: cargo::core::compiler::fingerprint: fingerprint error for chapter8_collections v0.1.0 (C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\Chapter\chapter8_collections)/Check { test: false }/TargetInner { name: "chapter8_collections", doc: true, ..: with_path("C:\\Users\\DELL\\Desktop\\hxd-Rust-from-zero-to-hero\\Chapter\\chapter8_collections\\src\\main.rs", Edition2024) }
-   0.016146800s  INFO prepare_target{force=false package_id=chapter8_collections v0.1.0 (C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\Chapter\chapter8_collections) target="chapter8_collections"}: cargo::core::compiler::fingerprint:     err: failed to read `C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\target\debug\.fingerprint\chapter8_collections-b39238c5f0d47954\bin-chapter8_collections`
-
-Caused by:
-    系统找不到指定的文件。 (os error 2)
-
-Stack backtrace:
-   0: git_midx_writer_dump
-   1: git_midx_writer_dump
-   2: git_midx_writer_dump
-   3: git_midx_writer_dump
-   4: git_filter_source_repo
-   5: git_filter_source_repo
-   6: git_filter_source_repo
-   7: git_filter_source_repo
-   8: git_filter_source_repo
-   9: git_filter_source_repo
-  10: git_filter_source_repo
-  11: git_libgit2_prerelease
-  12: <unknown>
-  13: <unknown>
-  14: <unknown>
-  15: <unknown>
-  16: git_midx_writer_dump
-  17: git_filter_source_repo
-  18: git_midx_writer_dump
-  19: BaseThreadInitThunk
-  20: RtlUserThreadStart
-   0.023083700s  INFO prepare_target{force=false package_id=chapter8_collections v0.1.0 (C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\Chapter\chapter8_collections) target="chapter8_collections"}: cargo::core::compiler::fingerprint: fingerprint error for chapter8_collections v0.1.0 (C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\Chapter\chapter8_collections)/Check { test: true }/TargetInner { name: "chapter8_collections", doc: true, ..: with_path("C:\\Users\\DELL\\Desktop\\hxd-Rust-from-zero-to-hero\\Chapter\\chapter8_collections\\src\\main.rs", Edition2024) }
-   0.023100500s  INFO prepare_target{force=false package_id=chapter8_collections v0.1.0 (C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\Chapter\chapter8_collections) target="chapter8_collections"}: cargo::core::compiler::fingerprint:     err: failed to read `C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\target\debug\.fingerprint\chapter8_collections-0ea2bef559caed7d\test-bin-chapter8_collections`
-
-Caused by:
-    系统找不到指定的文件。 (os error 2)
-
-Stack backtrace:
-   0: git_midx_writer_dump
-   1: git_midx_writer_dump
-   2: git_midx_writer_dump
-   3: git_midx_writer_dump
-   4: git_filter_source_repo
-   5: git_filter_source_repo
-   6: git_filter_source_repo
-   7: git_filter_source_repo
-   8: git_filter_source_repo
-   9: git_filter_source_repo
-  10: git_filter_source_repo
-  11: git_libgit2_prerelease
-  12: <unknown>
-  13: <unknown>
-  14: <unknown>
-  15: <unknown>
-  16: git_midx_writer_dump
-  17: git_filter_source_repo
-  18: git_midx_writer_dump
-  19: BaseThreadInitThunk
-  20: RtlUserThreadStart
+   0.022435400s  INFO prepare_target{force=false package_id=chapter10_generics_traits v0.1.0 (C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\Chapter\chapter10_generics_traits) target="chapter10_generics_traits"}: cargo::core::compiler::fingerprint: stale: changed "C:\\Users\\DELL\\Desktop\\hxd-Rust-from-zero-to-hero\\Chapter\\chapter10_generics_traits\\src\\main.rs"
+   0.022470200s  INFO prepare_target{force=false package_id=chapter10_generics_traits v0.1.0 (C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\Chapter\chapter10_generics_traits) target="chapter10_generics_traits"}: cargo::core::compiler::fingerprint:           (vs) "C:\\Users\\DELL\\Desktop\\hxd-Rust-from-zero-to-hero\\target\\debug\\.fingerprint\\chapter10_generics_traits-5302400f18cf058c\\dep-bin-chapter10_generics_traits"
+   0.022477100s  INFO prepare_target{force=false package_id=chapter10_generics_traits v0.1.0 (C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\Chapter\chapter10_generics_traits) target="chapter10_generics_traits"}: cargo::core::compiler::fingerprint:                FileTime { seconds: 13410359883, nanos: 213255600 } < FileTime { seconds: 13410448305, nanos: 899573600 }
+   0.022616400s  INFO prepare_target{force=false package_id=chapter10_generics_traits v0.1.0 (C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\Chapter\chapter10_generics_traits) target="chapter10_generics_traits"}: cargo::core::compiler::fingerprint: fingerprint dirty for chapter10_generics_traits v0.1.0 (C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\Chapter\chapter10_generics_traits)/Check { test: false }/TargetInner { name: "chapter10_generics_traits", doc: true, ..: with_path("C:\\Users\\DELL\\Desktop\\hxd-Rust-from-zero-to-hero\\Chapter\\chapter10_generics_traits\\src\\main.rs", Edition2024) }
+   0.022651400s  INFO prepare_target{force=false package_id=chapter10_generics_traits v0.1.0 (C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\Chapter\chapter10_generics_traits) target="chapter10_generics_traits"}: cargo::core::compiler::fingerprint:     dirty: FsStatusOutdated(StaleItem(ChangedFile { reference: "C:\\Users\\DELL\\Desktop\\hxd-Rust-from-zero-to-hero\\target\\debug\\.fingerprint\\chapter10_generics_traits-5302400f18cf058c\\dep-bin-chapter10_generics_traits", reference_mtime: FileTime { seconds: 13410359883, nanos: 213255600 }, stale: "C:\\Users\\DELL\\Desktop\\hxd-Rust-from-zero-to-hero\\Chapter\\chapter10_generics_traits\\src\\main.rs", stale_mtime: FileTime { seconds: 13410448305, nanos: 899573600 } }))
+   0.023341600s  INFO prepare_target{force=false package_id=chapter10_generics_traits v0.1.0 (C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\Chapter\chapter10_generics_traits) target="chapter10_generics_traits"}: cargo::core::compiler::fingerprint: stale: changed "C:\\Users\\DELL\\Desktop\\hxd-Rust-from-zero-to-hero\\Chapter\\chapter10_generics_traits\\src\\main.rs"
+   0.023354200s  INFO prepare_target{force=false package_id=chapter10_generics_traits v0.1.0 (C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\Chapter\chapter10_generics_traits) target="chapter10_generics_traits"}: cargo::core::compiler::fingerprint:           (vs) "C:\\Users\\DELL\\Desktop\\hxd-Rust-from-zero-to-hero\\target\\debug\\.fingerprint\\chapter10_generics_traits-beba409057d1ee40\\dep-test-bin-chapter10_generics_traits"
+   0.023360500s  INFO prepare_target{force=false package_id=chapter10_generics_traits v0.1.0 (C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\Chapter\chapter10_generics_traits) target="chapter10_generics_traits"}: cargo::core::compiler::fingerprint:                FileTime { seconds: 13410359883, nanos: 213255600 } < FileTime { seconds: 13410448305, nanos: 899573600 }
+   0.023462900s  INFO prepare_target{force=false package_id=chapter10_generics_traits v0.1.0 (C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\Chapter\chapter10_generics_traits) target="chapter10_generics_traits"}: cargo::core::compiler::fingerprint: fingerprint dirty for chapter10_generics_traits v0.1.0 (C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\Chapter\chapter10_generics_traits)/Check { test: true }/TargetInner { name: "chapter10_generics_traits", doc: true, ..: with_path("C:\\Users\\DELL\\Desktop\\hxd-Rust-from-zero-to-hero\\Chapter\\chapter10_generics_traits\\src\\main.rs", Edition2024) }
+   0.023477400s  INFO prepare_target{force=false package_id=chapter10_generics_traits v0.1.0 (C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\Chapter\chapter10_generics_traits) target="chapter10_generics_traits"}: cargo::core::compiler::fingerprint:     dirty: FsStatusOutdated(StaleItem(ChangedFile { reference: "C:\\Users\\DELL\\Desktop\\hxd-Rust-from-zero-to-hero\\target\\debug\\.fingerprint\\chapter10_generics_traits-beba409057d1ee40\\dep-test-bin-chapter10_generics_traits", reference_mtime: FileTime { seconds: 13410359883, nanos: 213255600 }, stale: "C:\\Users\\DELL\\Desktop\\hxd-Rust-from-zero-to-hero\\Chapter\\chapter10_generics_traits\\src\\main.rs", stale_mtime: FileTime { seconds: 13410448305, nanos: 899573600 } }))
+   0.025439800s  INFO prepare_target{force=false package_id=chapter8_collections v0.1.0 (C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\Chapter\chapter8_collections) target="chapter8_collections"}: cargo::core::compiler::fingerprint: stale: changed "C:\\Users\\DELL\\Desktop\\hxd-Rust-from-zero-to-hero\\Chapter\\chapter8_collections\\src\\main.rs"
+   0.025452200s  INFO prepare_target{force=false package_id=chapter8_collections v0.1.0 (C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\Chapter\chapter8_collections) target="chapter8_collections"}: cargo::core::compiler::fingerprint:           (vs) "C:\\Users\\DELL\\Desktop\\hxd-Rust-from-zero-to-hero\\target\\debug\\.fingerprint\\chapter8_collections-b39238c5f0d47954\\dep-bin-chapter8_collections"
+   0.025456700s  INFO prepare_target{force=false package_id=chapter8_collections v0.1.0 (C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\Chapter\chapter8_collections) target="chapter8_collections"}: cargo::core::compiler::fingerprint:                FileTime { seconds: 13410359583, nanos: 591878700 } < FileTime { seconds: 13410359648, nanos: 554318500 }
+   0.025535700s  INFO prepare_target{force=false package_id=chapter8_collections v0.1.0 (C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\Chapter\chapter8_collections) target="chapter8_collections"}: cargo::core::compiler::fingerprint: fingerprint dirty for chapter8_collections v0.1.0 (C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\Chapter\chapter8_collections)/Check { test: false }/TargetInner { name: "chapter8_collections", doc: true, ..: with_path("C:\\Users\\DELL\\Desktop\\hxd-Rust-from-zero-to-hero\\Chapter\\chapter8_collections\\src\\main.rs", Edition2024) }
+   0.025546600s  INFO prepare_target{force=false package_id=chapter8_collections v0.1.0 (C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\Chapter\chapter8_collections) target="chapter8_collections"}: cargo::core::compiler::fingerprint:     dirty: FsStatusOutdated(StaleItem(ChangedFile { reference: "C:\\Users\\DELL\\Desktop\\hxd-Rust-from-zero-to-hero\\target\\debug\\.fingerprint\\chapter8_collections-b39238c5f0d47954\\dep-bin-chapter8_collections", reference_mtime: FileTime { seconds: 13410359583, nanos: 591878700 }, stale: "C:\\Users\\DELL\\Desktop\\hxd-Rust-from-zero-to-hero\\Chapter\\chapter8_collections\\src\\main.rs", stale_mtime: FileTime { seconds: 13410359648, nanos: 554318500 } }))
+   0.026103000s  INFO prepare_target{force=false package_id=chapter8_collections v0.1.0 (C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\Chapter\chapter8_collections) target="chapter8_collections"}: cargo::core::compiler::fingerprint: stale: changed "C:\\Users\\DELL\\Desktop\\hxd-Rust-from-zero-to-hero\\Chapter\\chapter8_collections\\src\\main.rs"
+   0.026114400s  INFO prepare_target{force=false package_id=chapter8_collections v0.1.0 (C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\Chapter\chapter8_collections) target="chapter8_collections"}: cargo::core::compiler::fingerprint:           (vs) "C:\\Users\\DELL\\Desktop\\hxd-Rust-from-zero-to-hero\\target\\debug\\.fingerprint\\chapter8_collections-0ea2bef559caed7d\\dep-test-bin-chapter8_collections"
+   0.026147400s  INFO prepare_target{force=false package_id=chapter8_collections v0.1.0 (C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\Chapter\chapter8_collections) target="chapter8_collections"}: cargo::core::compiler::fingerprint:                FileTime { seconds: 13410359583, nanos: 591878700 } < FileTime { seconds: 13410359648, nanos: 554318500 }
+   0.026255900s  INFO prepare_target{force=false package_id=chapter8_collections v0.1.0 (C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\Chapter\chapter8_collections) target="chapter8_collections"}: cargo::core::compiler::fingerprint: fingerprint dirty for chapter8_collections v0.1.0 (C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\Chapter\chapter8_collections)/Check { test: true }/TargetInner { name: "chapter8_collections", doc: true, ..: with_path("C:\\Users\\DELL\\Desktop\\hxd-Rust-from-zero-to-hero\\Chapter\\chapter8_collections\\src\\main.rs", Edition2024) }
+   0.026269000s  INFO prepare_target{force=false package_id=chapter8_collections v0.1.0 (C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\Chapter\chapter8_collections) target="chapter8_collections"}: cargo::core::compiler::fingerprint:     dirty: FsStatusOutdated(StaleItem(ChangedFile { reference: "C:\\Users\\DELL\\Desktop\\hxd-Rust-from-zero-to-hero\\target\\debug\\.fingerprint\\chapter8_collections-0ea2bef559caed7d\\dep-test-bin-chapter8_collections", reference_mtime: FileTime { seconds: 13410359583, nanos: 591878700 }, stale: "C:\\Users\\DELL\\Desktop\\hxd-Rust-from-zero-to-hero\\Chapter\\chapter8_collections\\src\\main.rs", stale_mtime: FileTime { seconds: 13410359648, nanos: 554318500 } }))
     Checking chapter8_collections v0.1.0 (C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\Chapter\chapter8_collections)
-error: could not compile `chapter8_collections` (bin "chapter8_collections") due to 5 previous errors; 4 warnings emitted
+    Checking chapter10_generics_traits v0.1.0 (C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\Chapter\chapter10_generics_traits)
+error: could not compile `chapter8_collections` (bin "chapter8_collections") due to 3 previous errors; 10 warnings emitted
 warning: build failed, waiting for other jobs to finish...
-error: could not compile `chapter8_collections` (bin "chapter8_collections" test) due to 5 previous errors; 4 warnings emitted
+error: could not compile `chapter8_collections` (bin "chapter8_collections" test) due to 3 previous errors; 10 warnings emitted
+error: could not compile `chapter10_generics_traits` (bin "chapter10_generics_traits" test) due to 9 previous errors; 4 warnings emitted
+error: could not compile `chapter10_generics_traits` (bin "chapter10_generics_traits") due to 9 previous errors; 4 warnings emitted
