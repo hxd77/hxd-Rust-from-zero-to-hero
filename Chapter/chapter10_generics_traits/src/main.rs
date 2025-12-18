@@ -1,7 +1,7 @@
 use utils::*;
 use colored::Colorize;
 use std::collections::btree_map::Values;
-use std::fmt::format;
+use std::fmt::{format, write};
 use std::ops::Add;
 use std::{default, fmt};
 
@@ -352,12 +352,34 @@ fn defining_traits() {
 fn implementing_traits(){
     println!("\n{}", "为类型实现trait：".blue().bold());
 
-    //为自定义类型实现标准可trait
+    //为自定义类型实现标准库trait
     #[derive(Debug)]
     struct Rectangle{
         width :u32,
         height:u32,
     }
+
+    //实现Dispaly trait
+    impl std::fmt::Display for Rectangle{
+        fn fmt(&self, f: &mut fmt::Formatter) -> std::fmt::Result { //f:&mut fmt::Formatter表示一个输出缓冲区
+        write!(f, "Rectangle{{ width: {}, height: {}}}",self.width,self.height) //把内容写入f      
+        }
+    }
+
+    //实现PartialEq trait
+    impl PartialEq for Rectangle{
+        fn eq(&self,other:&Self)->bool{ //self表示方法的调用者,Self表示Rectangle一种类型
+            self.width==other.width&&self.height==other.height
+        }
+    }
+
+    let rect1=Rectangle{width:30,height:50};
+    let rect2 = Rectangle { width: 30, height: 50 };
+    let rect3 = Rectangle { width: 40, height: 50 };
+    
+    println!("矩形1: {}", rect1);
+    println!("矩形1 == 矩形2: {}", rect1 == rect2);
+    println!("矩形1 == 矩形3: {}", rect1 == rect3);
 }
 fn main() {
     println!("Hello, world!");

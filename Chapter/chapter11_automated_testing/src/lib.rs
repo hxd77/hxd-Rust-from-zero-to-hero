@@ -11,6 +11,10 @@ pub fn run()
     //使用asserts!宏来检查结果
     use_asserts();
 
+    //使用assert_eq!和assert_ne!宏来测试相等
+    use_assert_eq_and_assert_ne();
+
+
 }
 
 pub fn add(left:u64,right:u64)->u64
@@ -50,12 +54,57 @@ fn how_to_write_tests()
 
 fn use_asserts(){
     print_example_title("11.2 使用assert!宏来检查结果");
-    #[derive(Debug)]
-    struct Rectanle
-    {
-        width:u32,
-        height:u32,
-    }
     
 }
+#[derive(Debug)]
+pub struct Rectangle
+{
+    width:u32,
+    height:u32,
+}
 
+impl Rectangle{
+    pub fn can_hold(&self,other:&Rectangle)->bool{
+        self.width>other.width&&self.height>other.height
+    }
+}
+
+#[cfg(test)]
+mod tests3{
+    use super::*;
+
+    #[test]
+    fn larger_can_hold_smaller(){
+        let larger=Rectangle{width:8,height:7};
+        let smaller=Rectangle{width:5,height:1};
+
+        assert!(larger.can_hold(&smaller));
+    }
+
+    #[test]
+    fn smaller_canoot_hold_larger(){
+        let larger=Rectangle{width:8,height:7};
+        let smaller=Rectangle{width:5,height:1};
+
+        assert!(!smaller.can_hold(&larger));
+    }
+}
+
+
+fn use_assert_eq_and_assert_ne(){
+    print_example_title("11.3 使用assert_eq! 和 assert_ne! 宏来测试相等");
+}
+
+pub fn add_two(a:i32)->i32{
+    a+2
+}
+
+#[cfg(test)]
+mod test4{
+    use super::*;
+
+    #[test]
+    fn it_adds_two(){
+        assert_eq!(4,add_two(2));
+    }
+}
