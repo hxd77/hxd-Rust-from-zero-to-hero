@@ -27,6 +27,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "chapter13_functional_programming"
+version = "0.1.0"
+dependencies = [
+ "colored",
+ "utils",
+]
+
+[[package]]
 name = "chapter5_structs"
 version = "0.1.0"
 dependencies = [

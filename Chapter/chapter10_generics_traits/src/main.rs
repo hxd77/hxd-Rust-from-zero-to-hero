@@ -1,13 +1,13 @@
 use utils::*;
 use colored::Colorize;
-use std::collections::btree_map::Values;
-use std::fmt::{format, write};
+use std::collections::btree_map::{IterMut, Values};
+use std::fmt::{Display, format, write};
 use std::ops::Add;
 use std::{default, fmt};
 
 pub fn run()
 {
-    print_section_title("第10章: 泛型和Trait");
+    print_section_title("第10章: 泛型和Trait");//其实这章也包含了第19章高级主题大杂烩
 
     //泛型数据类型
     generic_data_types();
@@ -380,6 +380,322 @@ fn implementing_traits(){
     println!("矩形1: {}", rect1);
     println!("矩形1 == 矩形2: {}", rect1 == rect2);
     println!("矩形1 == 矩形3: {}", rect1 == rect3);
+}
+
+fn traits_with_generics(){
+    println!("\n{}", "trait与泛型结合：".blue().bold());
+    
+    //定义泛型trait
+    trait Container<T>{
+        fn get(&self)->&T;
+        fn set(&mut self,value:T);
+    }
+
+    //为泛型结构体实现trait
+    struct Box<T>{
+        value:T,
+    }
+
+    impl <T> Container<T> for Box<T>{
+        fn get(&self)->&T{
+            &self.value
+        }
+
+        fn set(&mut self,value:T)
+        {
+            self.value=value;
+        }
+    }
+
+    let mut int_box=Box{value:42};
+    println!("盒子中的值: {}",int_box.get());
+
+    int_box.set(100);
+    println!("更新后的值: {}", int_box.get());
+
+    let mut string_box=Box{value:String::from("hello")};
+    println!("字符串盒子: {}", string_box.get());
+    
+    string_box.set(String::from("world"));
+    println!("更新后的字符串: {}", string_box.get());
+}
+
+fn default_implementations(){
+    print_example_title("10.3 默认实现");
+    
+    // 默认实现示例
+    default_implementation_example();
+    
+    // 默认实现调用其他方法
+    default_calling_other_methods();
+    
+    pause();
+}
+
+fn default_implementation_example(){
+    println!("\n{}", "默认实现示例：".blue().bold());
+
+    pub trait Summary{
+        fn summarize_author(&self)->String;
+
+        fn summarize(&self)->String{
+            format!("(阅读更多来自{}的内容...)", self.summarize_author())
+        }
+     }
+
+     pub struct Tweet{
+        pub username:String,
+        pub content:String,
+        pub reply:bool,
+        pub retweet:bool,
+     }
+
+     impl Summary for Tweet{
+        fn summarize_author(&self)->String {
+            format!("@{}", self.username)
+        }
+     }
+
+     let tweet=Tweet{
+        username: "horse_ebooks".to_string(),
+        content: "当然，就像你可能知道的那样，人们".to_string(),
+        reply: false,
+        retweet: false,
+     };
+
+     println!("1条新推特: {}", tweet.summarize());
+}
+
+fn  default_calling_other_methods(){
+    println!("\n{}", "默认实现调用其他方法：".blue().bold());
+    
+    trait Pilot {
+        fn fly(&self);
+    }
+
+    trait Wizard {
+        fn fly(&self);
+    }
+
+    struct Human;
+
+    impl Pilot for Human{
+        fn fly(&self){
+            println!("在飞机里飞行");
+        }
+    }
+
+    impl Wizard for Human{
+        fn fly(&self){
+            println!("用魔法飞行");
+        }
+    }
+
+    impl Human {
+        fn fly(&self) {
+            println!("疯狂挥手");
+        }
+    }
+
+    let person=Human;
+
+    // 调用不同的fly方法
+    person.fly(); // 调用Human的fly方法
+    Pilot::fly(&person); // 调用Pilot trait的fly方法
+    Wizard::fly(&person); // 调用Wizard trait的fly方法
+    
+    // 如果没有默认实现，可以这样调用
+    <Human as Pilot>::fly(&person);
+    <Human as Wizard>::fly(&person);
+}
+
+fn traits_as_parameters(){
+    print_example_title("10.4 Trait作为参数");
+    
+    //impl Trait语法
+    impl_trait_syntax();
+
+    //trait bound语法
+    trait_bound_syntax();
+
+    pause();
+}
+
+fn impl_trait_syntax(){
+    println!("\n{}", "impl Trait语法：".blue().bold());
+
+    pub trait Summary{
+        fn summarize(&self)->String;
+    }
+
+    pub struct NewsArticle{
+        pub headline:String,
+        pub location:String,
+        pub author:String,
+        pub content:String,
+    }
+
+    impl Summary for NewsArticle{
+        fn summarize(&self)->String {
+            format!("{}, by {} ({})", self.headline, self.author, self.location)
+        }
+    }
+
+    pub struct Tweet{
+        pub username:String,
+        pub content:String,
+        pub reply:bool,
+        pub retweet:bool,
+    }
+
+    impl Summary for Tweet{
+        fn summarize(&self)->String {
+            format!("{}: {}", self.username, self.content)
+        }
+    }
+
+     // 使用impl Trait作为参数
+    pub fn notify(item: &impl Summary) {
+        println!("突发新闻！{}", item.summarize());
+    }
+
+    let article = NewsArticle {
+        headline: "Rust 1.70发布".to_string(),
+        location: "全球".to_string(),
+        author: "Rust Team".to_string(),
+        content: "Rust 1.70带来了许多新特性...".to_string(),
+    };
+    
+    let tweet = Tweet {
+        username: "rust_lang".to_string(),
+        content: "Rust编程语言官方推特".to_string(),
+        reply: false,
+        retweet: false,
+    };
+
+    notify(&article);
+    notify(&tweet);
+}
+fn trait_bound_syntax() {
+    println!("\n{}", "trait bound语法：".blue().bold());
+    
+    trait Summary {
+        fn summarize(&self) -> String;
+    }
+    
+    trait Display {
+        fn format(&self) -> String;
+    }
+    
+    // 使用trait bound
+    pub fn notify<T: Summary>(item: &T) {
+        println!("突发新闻！{}", item.summarize());
+    }
+    
+    // 多个trait bound
+    pub fn notify_and_display<T: Summary + Display>(item: &T) {
+        println!("新闻：{}", item.summarize());
+        println!("格式：{}", item.format());
+    }
+
+    //使用where子句
+    pub fn some_function<T,U>(t:&T,u:&U)->i32
+    where 
+        T: Display+Clone,
+        U: Clone+std::fmt::Debug,
+    {
+        println!("复杂的函数签名");
+        42
+    } 
+
+    println!("trait bound语法更适合复杂的约束");
+}
+
+fn trait_bounds(){
+    print_example_title("10.5 Trait Bound");
+
+    //复杂的trait bound
+    complex_trait_bounds();
+    
+    //条件trait bound 
+    conditional_trait_bounds();
+
+    pause();
+}
+
+fn complex_trait_bounds(){
+    println!("\n{}", "复杂的trait bound：".blue().bold());
+
+    use std::fmt::Display;
+
+    //返回较大值的泛型函数
+    fn largest<T:PartialOrd+Copy>(list:&[T])->T{
+        let mut largeset=list[0];
+        for &item in list{
+            if item >largeset{
+                largeset=item;
+            }
+        }
+        largeset
+    }
+
+    let number_list=vec![34,50,25,100,65];
+    let result=largest(&number_list);
+    println!("最大的数字是 {}",result);
+
+     // 既能比较又能显示的类型
+    fn largest_and_display<T: PartialOrd + Copy + Display>(list: &[T]) -> T {
+        let result = largest(list);
+        println!("最大值: {}", result);
+        result
+    }
+    
+    let char_list = vec!['y', 'm', 'a', 'q'];
+    largest_and_display(&char_list);
+}
+
+fn conditional_trait_bounds(){
+    println!("\n{}", "条件trait bound：".blue().bold());
+
+    use std::fmt::Display;
+
+    struct Pair<T>{
+        first:T,
+        second:T,
+    }
+
+    impl<T>Pair<T>{
+        fn new(first:T,second:T)->Self{
+            Self{first,second}
+        }
+    }
+
+    //只有当T实现了Display+PartialOrd时才实现这个方法
+    impl<T:Display+PartialOrd> Pair<T>{
+        fn cmp_display(&self)->&T{
+            if self.first>=self.second{
+                println!("较大的值是 {}",self.first);
+                &self.first
+            }
+            else {
+                println!("较大的值是 {}",self.second);
+                &self.second
+            }
+        }
+    }
+
+    let pair=Pair::new(3,7);
+    pair.cmp_display();
+
+    //无条件实现
+    println!("所有Pair<T>都有new方法");
+
+    //有条件实现
+    println!("只有T实现了Display + PartialOrd的Pair<T>才有cmp_display方法");
+}
+
+fn advanced_traits() {
+    print_example_title("");
 }
 fn main() {
     println!("Hello, world!");

@@ -7,7 +7,7 @@ members=[
     "Chapter/chapter5_structs", 
     "Chapter/chapter6_enums", 
     "Chapter/chapter7_modules_crates", 
-    "Chapter/chapter8_collections", "Chapter/chapter10_generics_traits", "Chapter/chapter11_automated_testing",
+    "Chapter/chapter8_collections", "Chapter/chapter10_generics_traits", "Chapter/chapter11_automated_testing", "Chapter/chapter13_functional_programming",
 ]
 exclude=[
     "arkwork-examples",
