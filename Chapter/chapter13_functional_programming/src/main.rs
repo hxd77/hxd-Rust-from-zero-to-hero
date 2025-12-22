@@ -134,7 +134,27 @@ fn closures_as_parameters(){
     println!("使用FnOnce trait: {}", call_once(greeter));
 }
 
+fn closure_type_inference(){
+    print_example_title("13.2 闭包类型推断和标注");
 
+    //类型推断示例
+    type_inference_examples();
+
+    //显示类型标注
+    explicit_type_annotations();
+
+    pause();
+}
+
+fn type_inference_examples(){
+    println!("\n{}", "类型推断示例：".blue().bold());
+
+    //Rust会推断闭包的类型
+    let add_one=|x| x+1;
+    println!("推断为i32: {}", add_one(5i32));
+    //一旦使用，类型就被确定了
+    
+}
 fn main() {
     println!("Hello, world!");
 }

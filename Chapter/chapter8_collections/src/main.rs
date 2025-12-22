@@ -1,5 +1,5 @@
 use utils::*;
-use std::collections::HashMap;
+use std::{collections::HashMap, convert, fmt::format, hash::Hash};
 use colored::Colorize;
 
 pub fn run()
@@ -316,7 +316,290 @@ fn slicing_strings(){
     println!("\n{}","切片字符串: ".blue().bold());
 
     let hello="Здравствуйте";
+    let s=&hello[0..4];
+    println!("切片结果: {}",s);
+
+    //注意: 必须在字符边界上进行切片
+    //let s=&hello[0..1]; //这会导致panic
+
+    println!("字符串切片必须在字符边界上进行");
     
+}
+
+fn iterating_strings(){
+    println!("\n{}", "遍历字符串：".blue().bold());
+
+    let hello= "नमस्ते";
+
+    //遍历字符
+    println!("遍历字符: ");
+    for c in hello.chars(){
+        println!(" {}",c);
+    }
+
+    //遍历字节
+    println!("遍历字节:");
+    for b in hello.bytes(){
+        println!(" {}",b);
+    }
+}
+
+fn hash_map_exapmles(){
+    print_example_title("8.3 HashMap");
+
+    //创建HashMap
+    creating_hash_maps();
+
+    //访问HashMap中的值
+    accessing_hash_maps();
+
+    //更新HashMap
+    updating_hash_maps();
+
+    //遍历HashMap();
+    iteraing_hash_maps();
+
+    pause();
+}
+
+fn creating_hash_maps(){
+    println!("\n{}", "创建HashMap：".blue().bold());
+
+    //创建空HashMap
+    let mut scores=HashMap::new();
+
+    scores.insert(String::from("Blue"), 10);
+    scores.insert(String::from("Yellow"), 50);
+
+    println!("分数: {:?}", scores);
+    
+    //使用collect方法创建HashMap
+    let teams=vec![String::from("Blue"),String::from("Yellow")];
+    let initial_scores=vec![10,50];
+
+    let mut socre:HashMap<_,_>=teams.iter().zip(initial_scores.iter()).collect();
+
+     println!("使用collect创建: {:?}", scores);
+}
+
+fn accessing_hash_maps(){
+    println!("\n{}", "访问HashMap中的值：".blue().bold());
+
+    let mut scores=HashMap::new();
+
+    scores.insert(String::from("Blue"),10);
+    scores.insert(String::from("Yellow"), 50);
+
+    //使用get方法
+    let team_name=String::from("Blue");
+    let score=scores.get(&team_name);
+
+    match score{
+        Some(score)=>println!("Blue队的分数: {}",score),
+        None=>println!("Blue队不存在"),
+    }
+
+    //使用get的简化写法
+    let score = scores.get(&String::from("Blue")).copied().unwrap_or(0);
+    println!("Blue队的分数（使用unwrap_or）: {}", score);
+}
+
+fn updating_hash_maps(){
+    println!("\n{}", "更新HashMap：".blue().bold());
+
+    //覆盖值
+    let mut scores=HashMap::new();
+    scores.insert(String::from("Blue"), 10);
+    scores.insert(String::from("Blue"), 25);
+    println!("覆盖值: {:?}", scores);
+
+    //只在键没有对应值时插入
+    let mut scores=HashMap::new();
+    scores.entry(String::from("Yellow")).or_insert(50);
+    scores.entry(String::from("Yellow")).or_insert(50);//or_insert会返回这个键的值的一个可变引用(&mut v)
+
+    println!("只在键没有对应值时插入: {:?}", scores);
+
+    //根据旧值更新一个值
+    let text="hello world wonderful world";
+    let mut map=HashMap::new();
+
+    for word in text.split_whitespace(){
+        let count=map.entry(word).or_insert(0);
+        *count+=1;
+    }
+
+    println!("单词计数: {:?}", map);
+}
+
+fn iteraing_hash_maps(){
+    println!("\n{}", "遍历HashMap：".blue().bold());
+
+    let mut scores=HashMap::new();
+    scores.insert(String::from("Blue"), 10);
+    scores.insert(String::from("Yellow"), 50);
+    scores.insert(String::from("Red"), 25);
+
+    //遍历键值对
+    println!("遍历键值对: ");
+    for(key ,value) in &scores{
+        println!("  {}: {}", key, value);
+    }
+
+    //遍历键
+    println!("遍历键: ");
+    for value in scores.values(){
+        println!(" {}",value);
+    }
+
+    //可变遍历值
+    println!("可变遍历值（每个值增加10）:");
+    for value in scores.values_mut(){
+        *value+=10; //返回一个引用后需要*解引用
+    }
+    println!("更新后的分数: {:?}", scores);
+}
+
+fn comprehensive_exercises(){
+    print_example_title("8.4 综合练习");
+    
+    // 练习1：给定一系列数字，使用vector并返回这个列表的中位数和众数
+    median_and_mode();
+    
+    // 练习2：将字符串转换为猪拉丁文
+    pig_latin();
+    
+    // 练习3：使用HashMap和vector创建一个文本接口来允许用户增加员工名字到公司的部门中
+    employee_management();
+    
+    pause();
+}
+
+fn median_and_mode(){
+    println!("\n{}", "练习1：中位数和众数".blue().bold());
+
+    let mut numbers=vec![1,2,3,3,4,4,4,5,5,6];
+    println!("原始数组: {:?}", numbers);
+
+    //计算中位数
+    numbers.sort();
+    let median=if numbers.len()%2==0{
+        let mid=numbers.len()/2;
+        (numbers[mid-1]+numbers[mid])as f64/2.0
+    }
+    else {
+        numbers[numbers.len()/2] as f64
+    };
+
+    println!("中位数: {}",median);
+
+    //计算众数
+    let mut counts=HashMap::new();
+    for &num in &numbers{
+        *(counts.entry(num).or_insert(0))+=1;
+    }
+
+    let mode=counts.into_iter().max_by_key(|(_,count)|*count).map(|(num,_)|num).unwrap();
+
+    println!("众数: {}",mode);
+    /*counts.iter()
+
+    |(_, count)| ... 是一个闭包（匿名函数），用于提取“比较键”
+
+    忽略 key
+    
+    count → HashMap value 的引用 &i32
+    
+    *count → 解引用，得到 i32 本身，用作比较键
+    
+    所以整个闭包的意思是：只看 value，用它来比较大小
+    最后返回Some((&key,&value))
+    */
+}
+
+fn pig_latin(){
+    println!("\n{}", "练习2：猪拉丁文转换".blue().bold());
+
+    let words=vec!["first","apple","hello","world"];
+
+    for word in words{
+        let pig_latin=convert_to_pig_latin(word);
+        println!("'{}' -> '{}' ",word,pig_latin);
+    }
+}
+
+fn convert_to_pig_latin(word:&str)->String{
+    let vowels=['a','e','i','o','u'];
+    let mut chars:Vec<char>=word.chars().collect();//把每一个字符收集到一个向量中
+    
+    if let Some(&first_char)=chars.first(){ 
+        /*Some(&first_char) 模式说明：
+
+        chars.first() 返回 Some(&c) → 匹配成功
+
+        &first_char → 解引用得到 char 类型（不是引用）
+
+        如果匹配成功 → first_char 就是第一个字符，可以在大括号内使用
+
+        如果匹配失败（即向量为空） → 条件不成立，跳过大括号内的代码 */
+        if vowels.contains(&first_char.to_ascii_lowercase()){//把字符转化为ASCII小写
+            //如果是元音开头，添加"- hay"
+            format!("{}-hay",word)
+        }
+        else{
+            //如果是辅音开头，将第一个字符移到末尾并并添加"ay"
+            chars.remove(0);
+            let rest:String=chars.into_iter().collect();
+            format!("{}-{}ay",rest,first_char)
+        }
+    }
+    else {
+        word.to_string()
+    }
+}
+
+fn employee_management(){
+    println!("\n{}", "练习3：员工管理系统".blue().bold());
+
+    let mut company=HashMap::new();
+
+    //添加员工到部门
+    add_employee_to_department(&mut company, "Engineering", "Alice");
+    add_employee_to_department(&mut company, "Engineering", "Bob");
+    add_employee_to_department(&mut company, "Sales", "Charlie");
+    add_employee_to_department(&mut company, "Sales", "David");
+    add_employee_to_department(&mut company, "Engineering", "Eve");
+
+    //显示所有部门和员工
+    print_company_structure(&company);
+
+    //HashMap<String,Vec<String>>
+    //获取特定部门的员工
+    if let Some(engineers)=company.get("Engineering"){
+        println!("\nEngineering部门的员工:");
+        for employee in engineers{ 
+            println!(" {}",employee);
+        }
+    }
+}
+
+fn add_employee_to_department(company:&mut HashMap<String,Vec<String>>,department:&str,employee:&str){
+    company
+        .entry(department.to_string())
+        .or_insert_with(Vec::new)
+        .push(employee.to_string());//因为Vec<String>
+}
+
+fn print_company_structure(company:&HashMap<String,Vec<String>>){
+    println!("\n公司结构:");
+    for (department,employees) in company{
+        println!("{}部门:", department);
+        let mut sorted_employees=employees.clone();
+        sorted_employees.sort();
+        for employee in sorted_employees{
+            println!("  {}", employee);
+        }
+    }
 }
 fn main()
 {
