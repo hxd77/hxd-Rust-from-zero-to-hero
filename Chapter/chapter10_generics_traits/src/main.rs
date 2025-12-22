@@ -1,7 +1,7 @@
 use utils::*;
 use colored::Colorize;
 use std::collections::btree_map::{IterMut, Values};
-use std::fmt::{Display, format, write};
+use std::fmt::{Display, Pointer, format, write};
 use std::ops::Add;
 use std::{default, fmt};
 
@@ -695,8 +695,102 @@ fn conditional_trait_bounds(){
 }
 
 fn advanced_traits() {
-    print_example_title("");
+    print_example_title("10.10 高级trait特性");
+
+    //关联类型
+    associated_types();
+
+    //默认泛型类型参数和运算符重载
+    default_T_type_parameter_and_operator_overloading();
+
+    //完全限定语法
+    fully_qualified_syntax();
+
+    //父trait
+    supertraits();
+
+    //newtype模式
+    newtype_pattern();
+
+    pause();
 }
+
+fn associated_types(){
+    println!("\n{}", "关联类型：".blue().bold());
+
+    trait Iterator{
+        type Item;
+
+        fn next(&mut self)->Option<Self::Item>;
+    }
+
+    struct Counter{
+        current:usize,
+        max:usize,
+    }
+
+    impl Counter {
+        fn new(max: usize) -> Counter {
+            Counter { current: 0, max }
+        }
+    }
+
+    impl Iterator for Counter{ //为类型Counter实现标准库里的Iterator trait
+        type Item=usize; //关联类型，每次next()返回的元素类型
+
+        fn next(&mut self)->Option<Self::Item> {
+            if self.current<self.max{
+                let current=self.current;
+                self.current+=1;
+                Some(current)//如果还有元素返回Option<usize>
+            }
+            else {
+                None
+            }
+        }
+    }
+
+    let mut counter=Counter::new(5);
+    while let Some(value)=counter.next(){ //只要模式匹配就一直返回
+        println!("计数器值: {}",value);
+    }
+
+    println!("关联类型避免了在每次使用trait时都指定类型参数");
+}
+
+fn default_T_type_parameter_and_operator_overloading(){
+    use std::ops::Add;//这个Add就是一个trait
+
+    #[derive(Debug,PartialEq)]
+    struct  Point{
+        x:i32,
+        y:i32,
+    }
+
+    impl Add for Point{
+        type Output = Point;
+        fn add(self, other: Self) -> Point{
+         Point{
+            x:self.x+other.x,
+            y:self.y+other.y,
+            }
+        }  
+    }
+
+    assert_eq!(Point{x:1,y:0}+Point{x:2,y:3},Point{x:3,y:3});
+
+    struct Millimeters(u32);
+    struct Meters(u32);
+
+    impl Add<Meters> for Millimeters{
+        type Output = Millimeters;
+
+        fn add(self, other: Meters) -> Millimeters {
+            Millimeters(self.0+(other.0*1000))
+        }
+    }
+}
+
 fn main() {
     println!("Hello, world!");
 }
