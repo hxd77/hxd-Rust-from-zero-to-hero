@@ -1,0 +1,4 @@
+证明、论证与零知识书籍中的代码:
+1. https://github.com/bgillesp/pazk
+2. https://github.com/montekki/thaler-study
+3. http://github.com/thor314/pazk
