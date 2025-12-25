@@ -79,7 +79,7 @@ $$
 >f(x) - y_i = g(x) = (x - x_i) \cdot q(x)
 >$$
 >
->- **含义**：根据多项式余数定理，如果 $x_i$ 是 $f(x) - y_i$ 的根（即 $f(x_i) - y_i = 0$），那么 $(x - x_i)$ 一定能整除 $f(x) - y_i$。
+>- **含义**：**根据多项式余数定理**，如果 $x_i$ 是 $f(x) - y_i$ 的根（即 $f(x_i) - y_i = 0$），那么 $(x - x_i)$ 一定能整除 $f(x) - y_i$。
 >- $q(x)$：这是**商多项式** (Quotient Polynomial)。在协议中，Prover 必须计算出这个多项式 $q(x)$。
 >
 >#### 3. 引入 Trusted Setup (秘密值 $s$)
@@ -105,7 +105,7 @@ $$
 >  - Prover 计算并发送证明 $\pi = q(s) \cdot G_1$。
 >  - 右边实际上等同于 $(s - x_i) \cdot \pi$。
 >
->## 5. 双线性配对验证 (Pairing Check)
+>#### 5. 双线性配对验证 (Pairing Check)
 >
 >$$
 >e(C - y_i \cdot G_1, G_2) = e(q(s) \cdot G_1, s \cdot G_2 - x_i \cdot G_2)
@@ -120,13 +120,13 @@ $$
 >  - $x_i \cdot G_2$：Verifier 使用输入 $x_i$ 和生成元 $G_2$ 计算得出。
 >
 >- **验证逻辑**：
->  $$
+> $$
 >  e(LHS, G_2) = e(G_1, G_2)^{f(s) - y_i}
->  $$
+> $$
 >
->  $$
+> $$
 >  e(RHS) = e(\pi, (s-x_i)G_2) = e(G_1, G_2)^{q(s) \cdot (s - x_i)}
->  $$
+> $$
 >
 >  若指数相等，则验证通过。
 >
@@ -226,9 +226,15 @@ print(ret) # x³ + x² + x + 1
 ```py
 def vanish(c1):
     # See: https://aszepieniec.github.io/stark-anatomy/basic-tools
-    x = [0, 1]
-    a = [1]
+    x = [0, 1] #0*x+1*x^1=x 
+    a = [1] #1
     for d in c1:
         a = polynomial.mul(a, polynomial.sub(x, [d]))
     return a
+'''
+如：如果 c1 = [1, 2]生成的 
+Z(x) = (x - 1)(x - 2)
+代入 x=1：(1-1)(1-2) = 0
+代入 x=2：(2-1)(2-2) = 0
+'''
 ```
