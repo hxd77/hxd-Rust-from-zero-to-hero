@@ -1,0 +1,1 @@
+C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\target\debug\libchapter12_io_grep.rlib: C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\Chapter\chapter12_io_grep\src\lib.rs C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\utils\src\lib.rs
