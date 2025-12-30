@@ -37,7 +37,7 @@ fn how_to_write_tests()
             assert_eq!(result, 4);
         }
     }
-    #[cfg(test)] //只有挡在运行测试时，这段代码才会被编译和执行
+#[cfg(test)] //只有挡在运行测试时，这段代码才会被编译和执行
     mod tests2{
         use super::*;
 

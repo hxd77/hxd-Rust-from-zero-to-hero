@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="EMPTY_MODULE" version="4">
+  <component name="NewModuleRootManager">
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/Chapter/chapter10_generics_traits/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Chapter/chapter11_automated_testing/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Chapter/chapter12_io_grep/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Chapter/chapter13_functional_programming/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Chapter/chapter3_basic_concepts/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Chapter/chapter4_ownerships/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Chapter/chapter5_structs/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Chapter/chapter6_enums/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Chapter/chapter7_modules_crates/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Chapter/chapter8_collections/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Chapter/chapter9_error_handling/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/DeepFold-Hyperplonk/arithmetic/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/DeepFold-Hyperplonk/hyperplonk/benches" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/DeepFold-Hyperplonk/hyperplonk/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/DeepFold-Hyperplonk/poly_commit/benches" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/DeepFold-Hyperplonk/poly_commit/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/DeepFold-Hyperplonk/util/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/arkwork-examples/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/hyperplonk/arithmetic/benches" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/hyperplonk/arithmetic/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/hyperplonk/hyperplonk/benches" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/hyperplonk/hyperplonk/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/hyperplonk/subroutines/benches" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/hyperplonk/subroutines/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/hyperplonk/transcript/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/hyperplonk/util/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/projects/cli_example/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/r1cs-tutorial/merkle-tree-example/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/r1cs-tutorial/rollup/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/r1cs-tutorial/simple-payments/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/temp/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/utils/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/AES-Rust/src" isTestSource="false" />
+      <excludeFolder url="file://$MODULE_DIR$/Chapter/chapter3_basic_concepts/target" />
+      <excludeFolder url="file://$MODULE_DIR$/Chapter/chapter4_ownerships/target" />
+      <excludeFolder url="file://$MODULE_DIR$/DeepFold-Hyperplonk/target" />
+      <excludeFolder url="file://$MODULE_DIR$/arkwork-examples/target" />
+      <excludeFolder url="file://$MODULE_DIR$/hyperplonk/target" />
+      <excludeFolder url="file://$MODULE_DIR$/projects/target" />
+      <excludeFolder url="file://$MODULE_DIR$/r1cs-tutorial/target" />
+      <excludeFolder url="file://$MODULE_DIR$/target" />
+      <excludeFolder url="file://$MODULE_DIR$/AES-Rust/target" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>
