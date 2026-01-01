@@ -35,6 +35,7 @@
       <sourceFolder url="file://$MODULE_DIR$/temp/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/utils/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/AES-Rust/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Chapter/chapter15_smart_pointers/src" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/Chapter/chapter3_basic_concepts/target" />
       <excludeFolder url="file://$MODULE_DIR$/Chapter/chapter4_ownerships/target" />
       <excludeFolder url="file://$MODULE_DIR$/DeepFold-Hyperplonk/target" />

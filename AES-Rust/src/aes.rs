@@ -53,5 +53,5 @@ pub struct AES128{
 }
 
 impl AES128{
-    pub fn new_from_str 
+    pub fn new_from_str
 }
