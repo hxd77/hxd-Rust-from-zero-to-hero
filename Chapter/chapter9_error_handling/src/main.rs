@@ -1,4 +1,8 @@
+
+
+
 use core::panic;
+use std::ascii::Char::Tilde;
 use std::fs::File;
 use std::io::{self, ErrorKind, Read};
 
@@ -195,7 +199,7 @@ fn propagating_errors(){
 
         let mut s=String::new();
 
-        match f.read_to_string(&mut s) //将文件f中的内容读出来放到s中,成功返回一个Ok(n),表示读取到的字节数
+        match f.read_to_string(&mut s) //将文件f中的内容读出来放到s中,成功返回一个Ok(string)
         {
             Ok(_)=>Ok(s),
             Err(e)=>Err(e),
@@ -209,8 +213,61 @@ fn propagating_errors(){
 }
 
 fn question_mark_operator(){
-    
+    println!("\n{}", "?运算符：".blue().bold());
+
+    fn read_username_from_file()->Result<String,io::Error>{
+        let mut f=File::open("username.txt");
+        let mut s=String::new();
+        f.read_to_string(&mut s)?;
+        Ok(s)
+    }
+
+    match read_username_from_file(){
+        Ok(username) => println!("用户名: {}", username),
+        Err(e) => println!("读取用户名失败: {}", e),
+    }
+    println!("?运算符使错误传播更简洁");
 }
+
+fn chaining_question_mark(){
+    println!("\n{}", "?运算符的链式调用：".blue().bold());
+
+    fn read_username_from_file() -> Result<String, io::Error> {
+        let mut s = String::new();
+        File::open("username.txt")?.read_to_string(&mut s)?;
+        Ok(s)
+    }
+
+    // 更简洁的版本
+    fn read_username_from_file_short() -> Result<String, io::Error> {
+        std::fs::read_to_string("username.txt")
+    }
+
+    match read_username_from_file() {
+        Ok(username) => println!("用户名: {}", username),
+        Err(e) => println!("读取用户名失败: {}", e),
+    }
+
+    match read_username_from_file_short() {
+        Ok(username) => println!("用户名（简短版本）: {}", username),
+        Err(e) => println!("读取用户名失败（简短版本）: {}", e),
+    }
+
+}
+
+fn main_can_return_result(){
+    println!("\n{}", "?运算符与main函数：".blue().bold());
+
+    println!("main函数可以返回Result<(), Box<dyn Error>>");
+    println!("这允许在main函数中使用?运算符");
+
+    //示例main函数
+    println!("fn main() -> Result<(), Box<dyn Error>> {{");
+    println!("    let f = File::open(\"hello.txt\")?;");
+    println!("    Ok(())");
+    println!("}}");
+}
+
 fn main() {
     println!("Hello, world!");
 }

@@ -5,4 +5,4 @@ edition = "2024"
 
 [dependencies]
 colored = "3.0.0"
-util = {path="../../utils"}
+utils = {path="../../utils"}

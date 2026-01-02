@@ -1,0 +1,1 @@
+C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\target\debug\libchapter17_gui.rlib: C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\Chapter\chapter17_gui\src\lib.rs C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\utils\src\lib.rs
