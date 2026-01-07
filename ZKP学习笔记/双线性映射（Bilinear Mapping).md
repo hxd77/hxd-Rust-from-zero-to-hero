@@ -31,4 +31,4 @@ $e:\mathbb{G}_1\times\mathbb{G}_2\rightarrow\mathbb{G}_T$ ，其中 $\mathbb{G}_
    e(g_1,g_2)\ne 1_{\mathbb{G}_r}
    $$
    
-3. 可计算性：$\exist g\in \mathbb{G}_1,\exist h\in \mathbb{G}_2$。总存在概率多项式时间算法计算出 $e(g,h)$。
+3. 可计算性：$\exist g\in \mathbb{G}_1,\exist h\in \mathbb{G}_2$。总存在概率多项式时间算法计算出 $e(g,h)$。 
