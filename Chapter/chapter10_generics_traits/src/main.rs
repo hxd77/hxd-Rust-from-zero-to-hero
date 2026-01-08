@@ -25,7 +25,7 @@ pub fn run()
     trait_bounds();
 
     //返回实现了Trait的类型
-    returing_trait_types();
+    returning_trait_types();
 
     //有条件地实现方法
     conditional_implementations();
@@ -694,6 +694,154 @@ fn conditional_trait_bounds(){
     println!("只有T实现了Display + PartialOrd的Pair<T>才有cmp_display方法");
 }
 
+fn returning_trait_types(){
+    print_example_title("10.6 返回实现了trait的类型");
+
+    //返回impl trait
+    returning_impl_trait();
+
+    //返回trait对象
+    returning_trait_objects();
+
+    pause();
+}
+
+fn returning_impl_trait(){
+    println!("\n{}", "返回impl Trait：".blue().bold());
+
+    trait Summary{
+        fn summarize(&self) -> String;
+    }
+
+    struct Tweet {
+        username:String,
+        content:String,
+        reply:bool,
+        retweet:bool,
+    }
+
+    impl Summary for Tweet{
+        fn summarize(&self)->String{
+            format!("{}: {}", self.username, self.content)
+        }
+    }
+
+    //返回实现了Summary trait的类型
+    fn returns_summarizable() -> impl Summary{
+        Tweet{
+            username:String::from("horse_ebooks"),
+            content:String::from("当然，就像你可能知道的那样，人们"),
+            reply:false,
+            retweet:false,
+        }
+    }
+
+    let tweet=returns_summarizable();
+    println!("返回的推特: {}",tweet.summarize());
+
+    // 注意：impl Trait只能返回单一类型
+    // 下面的代码会编译失败：
+    // fn returns_summarizable(switch: bool) -> impl Summary {
+    //     if switch { //switch是变量
+    //         NewsArticle { ... }
+    //     } else {
+    //         Tweet { ... }
+    //     }
+    // }
+}
+
+fn returning_trait_objects(){
+    println!("\n{}","返回的trait对象: ".blue().bold());
+
+    trait Summary{
+        fn summarize(&self) -> String;
+    }
+
+    struct Tweet {
+        username:String,
+        content:String,
+        reply:bool,
+        retweet:bool,
+    }
+
+    impl Summary for Tweet{
+        fn summarize(&self) -> String {
+            format!("{}: {}",self.username,self.content)
+        }
+    }
+
+    struct NewsArticle{
+        headline:String,
+        location:String,
+        author:String,
+        content:String,
+    }
+
+    impl Summary for NewsArticle{
+        fn summarize(&self)-> String {
+            format!("{}, by {} ({})",self.headline,self.author,self.location)
+        }
+    }
+
+    //返回trait对象可以返回不同的类型
+    fn returns_summarizable(switch:bool)->Box<dyn Summary>{
+        if switch{
+            Box::new(NewsArticle{
+                headline: String::from("Rust发布新版本"),
+                location: String::from("全球"),
+                author: String::from("Rust Team"),
+                content: String::from("Rust 1.70带来了许多新特性..."),
+            })
+        }
+        else {
+            Box::new(Tweet
+            {
+                username: String::from("rust_lang"),
+                content: String::from("Rust编程语言官方推特"),
+                reply: false,
+                retweet: false,
+            })
+        }
+    }
+
+    let item1=returns_summarizable(true);
+    let item2=returns_summarizable(false);
+
+    println!("动态分发1: {}",item1.summarize());
+    println!("动态分发2: {}",item2.summarize());
+}
+
+fn conditional_implementations(){
+    print_example_title("10.7 有条件地实现方法");
+
+    println!("\n{}","有条件地实现方法: ".blue().bold());
+
+    use std::fmt::Display;
+
+    //为实现Display trait的类型提供to_string方法
+    // 这是标准库中的blanket implementation
+    println!("标准库为所有实现了Display trait的类型提供了to_string方法");
+
+    let s=3.to_string();
+    println!("数字转字符串: {}", s);
+
+    //自定义blanket implementation毯式实现
+    trait MyDisplay{
+        fn my_to_string(&self)->String;
+    }
+
+    impl<T:Display>MyDisplay for T{
+        fn my_to_string(&self)->String{
+            format!("{}", self)
+        }
+    }
+
+    let number=42;
+    let text="hello";
+
+    println!("数字: {}", number.my_to_string());
+    println!("文本: {}", text.my_to_string());
+}
 fn advanced_traits() {
     print_example_title("10.10 高级trait特性");
 

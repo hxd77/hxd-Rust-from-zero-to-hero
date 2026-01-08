@@ -1,3 +1,6 @@
+use core::panic;
+use std::fmt::format;
+
 use colored::Colorize;
 use utils::*;
 
@@ -13,6 +16,9 @@ pub fn run()
 
     //使用assert_eq!和assert_ne!宏来测试相等
     use_assert_eq_and_assert_ne();
+
+    //自定义失败信息
+    custom_error_message();
 
 
 }
@@ -48,7 +54,7 @@ fn how_to_write_tests()
 
         #[test]
         fn another(){
-            panic!("测试失败");
+            //panic!("测试失败");//会测试失败
         }
     }
 
@@ -107,4 +113,53 @@ mod test4{
     fn it_adds_two(){
         assert_eq!(4,add_two(2));
     }
+}
+
+fn custom_error_message(){
+    print_example_title("11.4 自定义失败信息");
+}
+
+pub fn greeting(name:&str)->String{
+    format!("Hello {}!",name)
+}
+
+#[cfg(test)]
+mod test
+{
+    use super::*;
+
+    #[test]
+    fn greeting_contains_name(){
+        let result=greeting("Carol");
+        assert!(
+            result.contains("Carol"),
+            "Greeting did not contain name, value was '{}' ",result
+        );
+    }
+
+}
+
+fn use_should_panic_to_check_panic(){
+    print_example_title("11.5 使用should_panic检查panic");
+}
+
+pub struct Guess{
+    value:i32,
+}
+
+impl Guess{
+    pub fn new(value:i32)->Guess{
+        if value<1||value>100{
+            panic!("Guess value must be between 1 and 100, got {}.",value);
+        }
+        Guess { value }
+    }
+}
+
+#[cfg(test)]
+mod tests{
+    use super::*;
+
+    #[test]
+          
 }
