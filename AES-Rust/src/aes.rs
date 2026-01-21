@@ -47,11 +47,69 @@ pub struct AES128{
     expanded_key:[[u8;4];44],
     ///加密
     pub encrypt: fn(&AES128,&[u8])->Vec<u8>,
+    //解密
     pub decrypt:fn(&AES128,&[u8])->Vec<u8>,
     encrypt_block:fn(&AES128,&[u8])->Vec<u8>,
     decrypt_block:fn(&AES128,&[u8])->Vec<u8>,
 }
 
-impl AES128{
-    pub fn new_from_str
+impl AES128->Self{
+    //初始化
+    pub fn new_from_str(key:&str)->AES128{
+        let key_bytes=key.as_bytes();//把&str转换成&[u8]
+        if key_bytes.len()!=16{ //明文128位
+            panic("明文需要是16个字节长");
+        }
+    }
+    Self{
+        expanded_key:key_schedule_AES128(&clone_into_array(key_bytes)),
+        encrypt:encrypt_AES128,
+        decrypt:decrypt_AES128,
+        encrypt_block:encrypt_block_AES128,
+        decrypt_block:decrypt_block_AES128,
+    }
+
+    pub fn new(key:&[u8;16])->Self{
+        Self{
+            expanded_key:key_schedule_AES128(key),
+            encrypt:encrypt_AES128,
+            decrypt:decrypt_AES128,
+            encrypt_block:encrypt_block_AES128,
+            decrypt_block:decrypt_block_AES128,
+        }
+    }
+}
+
+//把一个切片&[T]复制到一个固定长度的数组容器A里
+fn clone_into_array<A,T>(slice:&[T])->A
+where 
+ A:Default+AsMut<[T]>, //保证能把&mut A转成&mut [T]
+ T:Clone,
+{
+    let mut a=A::default(); //初始化一个A:[0;16]
+    a.as_mut().clone_from_slice(slice);
+    //as_mut()把&mut a转成&mut [T]
+    //clone_from_slice(slice)把slice的元素逐个复制到&mut [T]中
+    //这里要求slice.len()==A.len()
+    a
+}
+
+//生成拓展密钥
+fn key_schedule_AES128(key_bytes:&[u8;16])->[[u8;4];44]{
+    let mut originnal_key=[[0u8;4];4]; //初始密钥128位,一共4个,每个4字节
+    let mut expanded_key=[[0u8;4];44];
+    let N =4;// Nk=128/32=4
+    for i in 0..16{
+        originnal_key[i/4]=key_bytes[i];
+    }
+
+    for i in 0..44{ //11 轮 
+        if i <N{ //第一轮
+            expanded_key[i]=originnal_key[i];
+        }
+        else if{
+            
+        }
+    }
+
 }
