@@ -38,7 +38,8 @@ static INVERSE_AES_SBOX: [[u8;16];16] = [ [0x52, 0x09, 0x6a, 0xd5, 0x30, 0x36, 0
     [0xa0, 0xe0, 0x3b, 0x4d, 0xae, 0x2a, 0xf5, 0xb0, 0xc8, 0xeb, 0xbb, 0x3c, 0x83, 0x53, 0x99, 0x61],
     [0x17, 0x2b, 0x04, 0x7e, 0xba, 0x77, 0xd6, 0x26, 0xe1, 0x69, 0x14, 0x63, 0x55, 0x21, 0x0c, 0x7d] ];
 
-///轮常量
+///轮常量是一个字(4个字节),这个字的右边3个字节总为0
+//Rcon[j]=(RC[j],0,0,0)
 static RC:[u8;11]=[0x00, 0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80, 0x1B, 0x36];
 
 pub struct AES128{
@@ -107,9 +108,87 @@ fn key_schedule_AES128(key_bytes:&[u8;16])->[[u8;4];44]{
         if i <N{ //第一轮
             expanded_key[i]=originnal_key[i];
         }
-        else if{
-            
+        else if i>=N&& i%N==0{ //n是4的倍数
+            let mut rcon=[0u8;4]; //rcon是一个字，4个字节
+            rcon[0]=RC[i/N]; //第一个字节不为0，其他三个字节都为0
+            expanded_key[i]=xor_words(&xor_words(&expanded_key[i-N],&sub_word((&rot_word(&expanded_key[i-1])))),&rcon) //xor_words返回[u8;4]4个字节
+            //4的倍数 W[n]=W[n-4]^SubWord(RotWord(W[n-1))^rcon[n/4]
+        }
+        else{
+            expanded_key[i]=xor_words(&expanded_key[i-N],&expanded_key[i-1]);
         }
     }
+    expanded_key
+}
 
+//S盒字节代换
+fn substitute(byte:u8,encryption:bool)->u8{ //返回一个字节
+    let upper_nibble:usize; //高位
+    let lower_nibble:usize;
+    upper_nibble=((byte>>4)&0xF).into(); //u8类型转换为usize
+    lower_nibble=((byte)&0xF).into();
+    if encryption==true{
+        AES_SBOX[upper_nibble][lower_nibble];
+    }
+    else{
+        INVERSE_AES_SBOX[upper_nibble][lower_nibble];
+    }
+}
+
+//循环左移一个字节
+fn rot_word(word:&[u8;4])->[u8;4]{
+    let mut result=[0u8;4];
+    for i in 0..4{
+        result[i]=word[(i+1)%4];
+    }
+    result
+}
+//利用S盒对输入的每个字节进行字节代换
+fn sub_word(word:&[u8;4])->[u8;4]{
+    let mut result=[0u8;4];
+    for i in 0..4{
+        result=substitute(word[i],true);
+    }
+    result
+}
+
+//异或操作
+fn xor_words(word1:&[u8;4],word2:&[u8;4])->[u8;4]{
+    let mut result=[0u8;4];
+    for i in 0..4{
+        result[i]=word1[i]^word2[i];
+    }
+    result
+}
+
+//轮密钥异或
+//一个二维数组，每个是一个字节
+fn add_round_key(state:&mut [[u8;4];4],key:&[[u8;4];4]){
+    for i in 0..4{
+        for j in 0..4{
+            state[i][j]=state[i][j]^key[i][j];
+        }
+    }
+}
+
+//状态矩阵的每一个字节进行S盒字节替换
+fn sub_bytes(state:&mut [[u8;4];4]){
+    for i in 0..4{
+        for j in 0..4{
+            state[i][j]=substitute(state[i][j],true);
+        }
+    }
+}
+
+//行移位
+fn shift_rows(state:&mut [[u8;4];4]){ //可以直接用内置rotate_left[i]循环左移一位
+  //从第1行开始（第0行不需要移位）
+    for i in 1..4{
+        let temp=state[i]; //暂存第1..3行的4个字节
+
+        //公式:新位置[j]=原位置[(j+移位量)%长度]
+        for j in 0..4{
+            state[i][j]=temp[(j+i)%4];
+        }
+    }
 }
