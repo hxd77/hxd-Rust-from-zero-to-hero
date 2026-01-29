@@ -192,3 +192,90 @@ fn shift_rows(state:&mut [[u8;4];4]){ //可以直接用内置rotate_left[i]循�
         }
     }
 }
+
+//逆行移位
+fn inv_shift_rows(state:&mut [[u8;4];4]){
+    //从第1行开始（第0行不需要移位）
+    for i in 1..4{
+        let temp=state[i]; //暂存第1..3行的每一行4个字节
+
+        for j in 0..4{
+            state[i][j]=temp[(i+2+j)%4];
+        }
+    }
+}
+
+/*
+fn galois_multiplication(ap:u8,bp:u8)->u8{ //伽罗华域计算
+    //本原多项式: x^8+x^4+x^3+x+1
+    let mut p=0u8; //p存储累加的结果
+    let mut high_bit=0u8;
+    let mut a=ap; //被乘数
+    let mut b=bp; //乘数
+    for i in 0..8{ //遍历b的每一个位
+        if b&1==1{ //如果b的最低位为1，则将当前的a^到p中
+            p^=a;
+        }
+        high_bit=a&0x80; //检查a的最高位是否为1
+        a=(a<<1)&0xFF;  //左移1位，相当于GMul(2,v)
+        if high_bit==0x80{
+            a^=0x1b; //最高位为1，要^0x1b
+        }
+        b=(b>>1)&0xFF; //右移1位
+    }
+    return p&0xFF;
+}
+*/
+
+fn galois_multiplication(ap:u8,bp:u8)->u8{ //ap是被乘数，bp是乘数
+    let mut temp=[0u8;8]; //8个字节，每个字节表示*(1..8)的结果
+    let result=0u8;
+    temp[0]=ap;
+    for i in 1..8{
+        if temp[i-1]>=0x80{ //如果最高位为1
+            temp[i]=(temp[i-1]<<1)^0x1b; //异或0x1b
+        }
+        else
+        {
+            temp[i]=temp[i-1]<<1; //否则只左移一位
+        }
+
+    }
+    for i in 0..8{
+        if ((bp>>i)&0x01==1) {
+            result^=temp[i];
+        }
+    }
+    result
+}
+//列混合
+fn mix_columns(state:&mut [[u8;4];4]){
+    for j in 0..4{ //列
+        let mut temp=[0u8;4]; //4个字节
+        for i in 0..4{ //行
+            temp[i]=state[i][j]; //列优先
+        }
+        //temp[0]=state[0][0]
+        //temp[1]=state[1][0]
+        state[0][j]=galois_multiplication(temp[0],2)^galois_multiplication(temp[1],3)^galois_multiplication(temp[2],1)^galois_multiplication(temp[3],1);
+        state[1][j]=galois_multiplication(temp[0],1)^galois_multiplication(temp[1],2)^galois_multiplication(temp[2],3)^galois_multiplication(temp[3],1);
+        state[2][j]=galois_multiplication(temp[0],1)^galois_multiplication(temp[1],2)^galois_multiplication(temp[2],3)^galois_multiplication(temp[3],3);
+        state[3][j]=galois_multiplication(temp[0],3)^galois_multiplication(temp[1],1)^galois_multiplication(temp[2],1)^galois_multiplication(temp[3],2);
+    }
+}
+
+fn inv_mix_columns(state:&mut [[u8;4];4]){
+    for j in 0..4{
+        let mut temp=[0u8;4];
+        for i in 0..4{
+            temp[i]=state[i][j];
+        }
+        state[0][j]=galois_multiplication(temp[0],14)^galois_multiplication(temp[1],10)^galois_multiplication(temp[2],13)^galois_multiplication(temp[3],9);
+        state[1][j]=galois_multiplication(temp[0],9)^galois_multiplication(temp[1],14)^galois_multiplication(temp[2],10)^galois_multiplication(temp[3],13);
+        state[2][j]=galois_multiplication(temp[0],13)^galois_multiplication(temp[1],9)^galois_multiplication(temp[2],14)^galois_multiplication(temp[3],10);
+        state[3][j]=galois_multiplication(temp[0],10)^galois_multiplication(temp[2],13)^galois_multiplication(temp[2],9)^galois_multiplication(temp[3],14);
+    }
+}
+
+
+
