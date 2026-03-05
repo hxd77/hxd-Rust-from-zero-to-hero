@@ -1,9 +1,10 @@
-use core::borrow;
-use std::f32::MIN_POSITIVE;
 use std::vec;
 use std::thread;
 use utils::*;
 use colored::Colorize;
+use std::collections::HashMap;
+use std::hash::Hash;
+use std::time::Duration;
 
 pub fn run(){
     print_section_title("第13章: 函数式编程 - 闭包和迭代器");
@@ -17,7 +18,21 @@ pub fn run(){
     //move闭包
     move_closures();
 
-    //
+    //迭代器
+    iterator();
+    
+    //迭代器适配器
+    iterator_adaptors();
+    
+    //消费适配器
+    consuming_adaptors();
+    
+    //函数式编程实践
+    functional_programming_pracitce();
+    
+    //性能对比
+    
+
 }
 
 fn closures(){
@@ -29,8 +44,14 @@ fn closures(){
     //闭包语法
     closure_syntax();
 
+    //捕获环境语法
+    capturing_environment();
+
     //闭包作为参数
     closures_as_parameters();
+
+    //例子-健身计划生成app
+    gym_plan_app();
 
     pause();
 }
@@ -100,7 +121,7 @@ fn closures_as_parameters(){
 
     //使用Fn trait
     fn call_with_one<F>(f:F)->i32
-    where 
+    where
         F:Fn(i32)->i32, //trait bound
     {
         f(1)
@@ -381,17 +402,92 @@ fn move_closures_in_threads(){
     
 }
 
+fn gym_plan_app()
+{
+    print_example_title(("13.5 例子: 健身计划生成app"));
+
+    let simulated_user_specified_value=10;
+    let simulated_random_number=7;
+
+    generate_workout(
+        simulated_user_specified_value,
+        simulated_random_number
+    );
+
+}
+struct Cacher<T>
+    where T:Fn(u32)->u32
+{
+    calculation:T,
+    value:HashMap<u32,u32>,
+}
+impl<T>Cacher<T>
+    where T:Fn(u32)->u32
+{
+    fn new(calculation: T) -> Self {
+        Cacher {
+            calculation,
+            value: HashMap::new(), //初始化哈希值
+        }
+    }
+
+    fn value(&mut self, arg: u32) -> u32 {
+        //缓存逻辑：有则返回，无则计算插入
+        *self.value.entry(arg).or_insert_with(||(self.calculation)(arg))
+        //or_insert_with用法: 如果键存在，则返回值
+        //如果不存在，则用闭包算出一个值存进去
+    }
+}
+
+fn generate_workout(intensity:u32,random_number:u32){
+    let mut expensive_result=Cacher::new(|num| {
+        println!("缓慢计算中...");
+        thread::sleep(Duration::from_secs(2)); //让线程缓慢执行2s
+        num
+    });
+    if intensity<25{
+        println!(
+            "今天,做 {} 个俯卧撑!",
+            expensive_result.value(intensity)
+        );
+        println!(
+            "然后,做 {} 个仰卧起坐!",
+            expensive_result.value(intensity)
+        );
+    }
+    else{
+        if random_number==3{
+            println!("今天休息一天吧!,记得保持补充水分!");
+        }
+        else{
+            println!(
+                "今天,跑步 {} 分钟!",
+                expensive_result.value(intensity)
+            );
+        }
+    }
+}
+
 fn iterator(){
-    print_example_title("13.5 迭代器");
+    print_example_title("13.6 迭代器");
 
     //迭代器基础
     iterator_basics();
 
-    //Iterator trait
-    iterator_trait();
+    //Iterator trait和next方法
+    iterator_demonstration();
 
-    //创建迭代器
-    creating_iteators();
+    // 消费迭代器的方法
+    iterator_sum();
+
+    //产生其他迭代器的方法
+    other_creating_iterators();
+
+    //使用闭包获取环境
+    filters_by_size();
+
+    //实现Iterator trait来创建自定义迭代器
+    impl_iterator_trait();
 
     pause();
 }
@@ -424,6 +520,126 @@ fn iterator_basics(){
         println!("  惰性项: {}", item);
     }
 }
+
+fn iterator_demonstration(){
+    println!("\n{}","Iterator trait和next方法".blue().bold());
+    let v1=vec![1,2,3];
+    let mut v1_iter=v1.iter();
+
+    assert_eq!(v1_iter.next(),Some(&1));
+    assert_eq!(v1_iter.next(),Some(&2));
+    assert_eq!(v1_iter.next(),Some(&3));
+    assert_eq!(v1_iter.next(),None);
+}
+
+fn iterator_sum() {
+    println!("\n{}","消费迭代器的方法".blue().bold());
+    let v1=vec![1,2,3];
+
+    let v1_iter=v1.iter();
+    let total:i32=v1_iter.sum();
+    assert_eq!(total,6);
+}
+
+
+fn other_creating_iterators()
+{
+    println!("\n{}","产生其他迭代器的方法".blue().bold());
+
+    let v1=vec![1,2,3];
+    let v2:Vec<_>=v1.iter().map(|x| x+1).collect();    //map使用闭包来调用每一个元素以生成新的迭代器
+    assert_eq!(v2,vec![2,3,4]);
+}
+
+#[derive(PartialEq, Debug)]
+struct Shoe{
+    size:u32,
+    style:String,
+}
+
+fn shoes_in_my_size(shoes:Vec<Shoe>,shoe_size:u32)->Vec<Shoe>{
+    shoes.into_iter()   //into_iter获取v1的所有权并返回拥有所有权的迭代器
+        .filter(|s| s.size==shoe_size)
+        .collect()  //返回和shoe_size一样的
+}
+
+fn filters_by_size(){
+    println!("\n{}","使用闭包获取环境".blue().bold());
+    let shoes=vec![
+        Shoe {size:10,style:String::from("sneaker")},
+        Shoe {size:13,style:String::from("sandal")},
+        Shoe {size:10,style:String::from("boot")},
+    ];
+
+    let in_my_size=shoes_in_my_size(shoes,10);
+
+    assert_eq!(
+        in_my_size,
+        vec![
+            Shoe{size:10,style:String::from("sneaker")},
+            Shoe{size:10,style:String::from("boot")},
+        ]
+    );
+}
+
+fn impl_iterator_trait(){
+    println!("\n{}","实现Iterator trait来创建自定义迭代器".blue().bold());
+
+    //使用Counter迭代器的next方法
+    calling_next_directly();
+
+    //使用自定义迭代器中其他Iterator trait方法
+    using_other_iterator_trait_methods();
+}
+
+struct Counter{
+    count:u32,
+}
+
+impl Counter{
+    fn new() -> Counter{
+        Counter{count:0}
+    }
+}
+
+impl Iterator for Counter{
+    type Item=u32;
+    fn next(&mut self) -> Option<Self::Item> {
+        self.count+=1;
+        if self.count<6{
+            Some(self.count)
+        }
+        else{
+            None
+        }
+    }
+}
+
+fn calling_next_directly(){
+    let mut counter=Counter::new();
+    assert_eq!(counter.next(),Some(1));
+    assert_eq!(counter.next(),Some(2));
+    assert_eq!(counter.next(),Some(3));
+    assert_eq!(counter.next(),Some(4));
+    assert_eq!(counter.next(),Some(5));
+    assert_eq!(counter.next(),None);
+}
+
+fn using_other_iterator_trait_methods(){
+    let filter_result: Vec<_> = Counter::new()
+        .zip(Counter::new().skip(1))
+        .inspect(|pair| println!("配对{:?}", pair)) // 边流过边打印
+        .map(|(x, y)| x * y)
+        .filter(|x| x % 3 == 0)
+        .collect();
+    println!("filter_result ={:?}", filter_result);
+    let sum:u32=Counter::new()
+        .zip(Counter::new().skip(1))
+        .map(|(a,b)| a*b)
+        .filter(|x| x % 3 == 0)
+        .sum();
+    assert_eq!(18,sum);
+}
 fn main() {
-    println!("Hello, world!");
+    run();
 }

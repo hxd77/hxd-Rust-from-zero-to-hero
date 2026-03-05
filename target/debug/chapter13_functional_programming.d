@@ -1,0 +1,1 @@
+C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\target\debug\chapter13_functional_programming.exe: C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\Chapter\chapter13_functional_programming\src\main.rs C:\Users\DELL\Desktop\hxd-Rust-from-zero-to-hero\utils\src\lib.rs

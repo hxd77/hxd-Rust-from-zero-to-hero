@@ -1,11 +1,7 @@
-
-
-
 use core::panic;
-use std::ascii::Char::Tilde;
+use std::fmt::write;
 use std::fs::File;
 use std::io::{self, ErrorKind, Read};
-
 use utils::*;
 use colored::Colorize;
 
@@ -216,7 +212,7 @@ fn question_mark_operator(){
     println!("\n{}", "?运算符：".blue().bold());
 
     fn read_username_from_file()->Result<String,io::Error>{
-        let mut f=File::open("username.txt");
+        let mut f=File::open("username.txt")?;
         let mut s=String::new();
         f.read_to_string(&mut s)?;
         Ok(s)
@@ -268,6 +264,173 @@ fn main_can_return_result(){
     println!("}}");
 }
 
+fn when_to_panic(){
+    print_example_title("9.4 何时使用panic!");
+
+    //示例、代码原型和测试
+    examples_prototypes_tests();
+
+    //当你比编译器知道更多信息时
+    when_you_know_more();
+
+    //错误处理指导原则
+    error_handing_guidelines();
+
+    pause();
+}
+
+fn examples_prototypes_tests(){
+    println!("\n{}","示例、代码原型和测试: ".blue().bold());
+
+    println!("在这些情况下使用unwrap和expect是合适的: ");
+    println!("1. 编写示例代码时");
+    println!("2. 快速原型开发时");
+    println!("3. 编写测试时");
+
+    //示例中的unwrap
+    let result="42".parse::<i32>().unwrap(); //parse::<i32>比目鱼语法,把字符串转成32位有符号整数Result类型
+    println!("解析结果: {}", result);
+
+    //测试中的expect
+    let result="42".parse::<i32>().expect("解析数字应该成功"); //expect成功返回Result里的值，失败则返回panic
+    println!("解析结果: {}", result);
+}
+
+fn when_you_know_more(){
+    println!("\n{}","当你比编译器知道更多信息时: ".blue().bold());
+
+    use std::net::IpAddr;
+
+    //我们知道这个字符串是有效的IP地址
+    let home:IpAddr = "127.0.0.1".parse().unwrap();
+    println!("家庭IP地址: {}", home);
+
+    println!("在这种情况下，我们确信字符串是有效的IP地址");
+    println!("所以使用unwrap是合适的");
+}
+
+fn error_handing_guidelines(){
+    println!("\n{}", "错误处理指导原则：".blue().bold());
+
+    println!("建议在以下情况下使用panic!：");
+    println!("1. 代码可能会处于有害状态");
+    println!("2. 有害状态是不被期望的");
+    println!("3. 你的代码依赖于不处于这种有害状态");
+
+    println!("\n建议返回Result的情况：");
+    println!("1. 失败是预期的");
+    println!("2. 调用者可以合理地处理错误");
+
+    // 验证示例
+    validation_example();
+}
+
+fn validation_example(){
+    println!("\n{}","验证示例: ".blue().bold());
+
+    pub struct Guess {
+        value: i32,
+    }
+
+    impl Guess {
+        pub fn new(value: i32) -> Guess {
+            if value < 1 || value > 100 {
+                panic!("猜测值必须在1到100之间，得到了{}", value);
+            }
+
+            Guess { value }
+        }
+
+        pub fn value(&self) -> i32 {
+            self.value
+        }
+    }
+
+    // 有效的猜测
+    let guess = Guess::new(50);
+    println!("有效的猜测: {}", guess.value());
+
+    // 无效的猜测会导致panic
+    // let invalid_guess = Guess::new(200);
+    println!("创建无效猜测（值为200）会导致panic");
+}
+
+fn custom_error_types(){
+    print_example_title("9.5 自定义错误类型");
+
+    //定义自定义错误类型
+    defining_custom_errors();
+
+    //实现错误trait
+    implementing_error_trait();
+
+    //使用自定义错误类型
+    using_custom_errors();
+
+    pause();
+}
+
+fn defining_custom_errors(){
+    println!("\n{}","定义自定义错误类型: ".blue().bold());
+
+    #[derive(Debug)]
+    enum MathError{
+        DivisionByZero,
+        NegativeLogarithm,
+        NegativeSquareRoot,
+    }
+
+    impl std::fmt::Display for MathError {
+        //fmt是Display特征规定必须实现的方法
+        //f是一个格式化器
+        //write!是一个宏，表示把后面的中文字符串写入到前面的f中
+        fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+            match self{
+                MathError::DivisionByZero => write!(f, "不能除以零"),
+                MathError::NegativeLogarithm=>write!(f,"不能计算负数的对数"),
+                MathError::NegativeSquareRoot=>write!(f,"不能计算负数的平方根"),
+            }
+        }
+
+    }
+
+    impl std::error::Error for MathError{} //实现MathError是一个标准的错误类型
+    fn divide(a:f64,b:f64)->Result<f64,MathError>{
+        if b==0.0{
+            Err(MathError::DivisionByZero)
+        }
+        else { Ok(a/b) }
+    }
+
+    //使用自定义错误类型
+    match divide(10.0,2.0){
+        Ok(result)=>println!("10.0 / 2.0 = {}",result),
+        Err(e)=>println!("错误: {}",e),
+    }
+
+    match divide(10.0, 0.0) {
+        Ok(result) => println!("10.0 / 0.0 = {}", result),
+        Err(e) => println!("错误: {}", e),
+    }
+}
+
+fn implementing_error_trait(){
+    println!("\n{}", "实现错误trait：".blue().bold());
+
+    #[derive(Debug)]
+    enum ParsePersonErrorKind{
+        Empty,
+        BadLen,
+        NoAge,
+        ParseInt(std::num::ParseIntError), //()里面是返回错误类型
+    }
+    #[derive(Debug)]
+    struct ParsePersonError{
+        kind:ParsePersonErrorKind,
+    }
+
+
+}
 fn main() {
     println!("Hello, world!");
 }

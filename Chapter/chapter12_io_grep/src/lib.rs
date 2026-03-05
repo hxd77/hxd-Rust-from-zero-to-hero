@@ -10,16 +10,21 @@ pub struct Config{
 }
 
 impl Config{
-    pub fn new(args:&[String])->Result<Config,&'static str>{
-        if args.len()<3{
-            return Err("not enough arguments");
-        }
-        let query=args[1].clone();
-        let filename=args[2].clone();
+    pub fn new(mut args:std::env::Args)->Result<Config,&'static str>{
+        args.next(); //env::args()返回的第一个值是程序名称
 
-        let case_sensitive=env::var("CASE_INSENSITIVE").is_err();
-        Ok(Config { query, filename ,case_sensitive})
-    } 
+        let query=match args.next(){
+            Some(arg)=>arg,
+            None=>return Err("Didn't get a query string"), //加了return会提前结束函数
+        };
+        let filename=match args.next(){
+            Some(arg)=>arg,
+            None=>return Err("Didn't get a filename"),
+        };
+
+        let case_sensitive=env::var("CASE_SENSITIVE").is_err();
+        Ok(Config{query,filename,case_sensitive})
+    }
 }
 
  pub fn run(config:Config)->Result<(),Box<dyn Error>>
@@ -76,12 +81,7 @@ pub fn search_case_intensitive<'a>(query:&str,contents:&'a str)->Vec<&'a str>{
     results
 }
 pub fn search<'a>(query:&str,contents:&'a str)->Vec<&'a str>{
-    let mut results=Vec::new();
-
-    for line in contents.lines(){   //遍历每一行
-        if line.contains(query){ //productive里面有duct
-        results.push(line);        
-        }
-    }
-    results
+    contents.lines() //lines按换行符分开
+        .filter(|line| line.contains(query)) //filter过滤如果包含true则进行下一步
+        .collect()
 }

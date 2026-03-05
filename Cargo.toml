@@ -12,6 +12,5 @@ members=[
 exclude=[
     "arkwork-examples",
     "r1cs-tutorial",
-    "HyperPlonk_example_by_hxd",
     "AES-Rust",
 ]
