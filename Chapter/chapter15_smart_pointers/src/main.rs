@@ -1,5 +1,6 @@
 use std::any::Any;
 use std::arch::x86_64::_mm_pause;
+use std::ops::Deref;
 use utils::*;
 use colored::Colorize;
 
@@ -86,7 +87,7 @@ fn recursive_types(){
     //链表实现
     #[derive(Debug)]
     enum List{
-        Cons(i32,Box<list>),
+        Cons(i32,Box<List>),
         Nil,
     }
 
@@ -174,7 +175,7 @@ fn large_data_movement(){
     let large1=LargeStruct::new(1);
     let large2=Box::new(LargeStruct::new(2));
 
-    println!("处理直接结构体: {}",process_large_struct_box(large1));
+    println!("处理直接结构体: {}",process_large_struct_direct(large1));
     println!("处理Box结构体: {}",process_large_struct_box(large2));
 
     println!("Box只移动指针（8字节），而不是整个结构体");
@@ -251,7 +252,121 @@ fn custom_smart_pointer_deref(){
 
 }
 
+fn deref_coercion(){
+      println!("\n{}","Deref强制转换: ".blue().bold());
 
+    //MyBox实现Deref
+    struct MyBox<T>(T);
+
+    impl<T> MyBox<T>{
+        fn new(x:T)->MyBox<T>{MyBox(x)}
+    }
+
+    impl <T> Deref for MyBox<T>{
+        type Target=T;
+        fn deref(&self)->&Self::Target{&self.0}
+    }
+
+    fn hello(name:&str){println!("Hello, {}! ",name);}
+
+    //Deref强制转换:&MyBox<String> -> &String -> &str
+    let m=MyBox::new(String::from("Rust"));
+    hello(&m); //&MyBox<String>自动转换为&str
+
+    // 手动解引用（等价）
+    hello(&(*m)[..]);
+
+    println!("Deref强制转换规则:");
+    println!("- &T -> &U 当 T: Deref<Target=U>");
+    println!("- &mut T -> &mut U 当 T: DerefMut<Target=U>");
+    println!("- &mut T -> &U 当 T: Deref<Target=U>");
+}
+
+fn drop_trait(){
+    print_example_title("15.3 Drop Trait - 析构");
+
+    //Drop trait基础
+    drop_basics();
+
+    //提前释放
+    early_drop();
+
+    pause();
+}
+
+fn drop_basics(){
+    println!("\n{}","Drop trait基础: ".blue().bold());
+
+    struct CustomSmartPointer{
+        data: String,
+    }
+
+    impl Drop for CustomSmartPointer{
+        fn drop(&mut self){println!("释放 CustomSmartPointer 数据: `{}`",self.data);}
+    }
+
+    {
+        let _c = CustomSmartPointer {
+            data: String::from("我的数据")
+        };
+        let _d = CustomSmartPointer {
+            data: String::from("其他数据")
+        };
+        println!("CustomSmartPointer创建完成");
+    }// _d和_c在这里离开作用域，按相反顺序调用drop
+
+    println!("作用域结束后继续执行");
+
+    //Drop trait的重要性
+    println!("\nDrop trait用于:");
+    println!("- 释放内存");
+    println!("- 关闭文件");
+    println!("- 释放网络连接");
+    println!("- 释放锁");
+}
+
+fn early_drop(){
+    println!("\n{}","提起释放: ".blue().bold());
+
+    struct CustomSmartPointer{
+        data:String,
+    }
+    impl Drop for CustomSmartPointer{
+        fn drop(&mut self){println!("释放数据: `{}`",self.data);}
+    }
+
+    let c =CustomSmartPointer{
+        data:String::from("一些数据"),
+    };
+
+    println!("创建了CustomSmartPointer");
+
+    // 不能直接调用drop方法
+    // c.drop(); // 编译错误
+
+    // 使用std::mem::drop提前释放
+    drop(c);
+    println!("在main结束前释放了CustomSmartPointer");
+
+    // 实际使用场景：提前释放锁
+    println!("\n提前释放的使用场景:");
+    println!("- 释放文件句柄");
+    println!("- 释放网络连接");
+    println!("- 释放互斥锁");
+    println!("- 减少内存使用");
+}
+
+fn rc_smart_pointer(){
+    print_example_title("15.3 Rc<T> - 引用计数");
+
+    //Rc基础
+    rc_basics();
+
+    //共享数据结构
+    shared_data_structures();
+
+    pause();
+}
 #[allow(dead_code)]
 fn main(){
     run();

@@ -468,57 +468,30 @@ fn generate_workout(intensity:u32,random_number:u32){
     }
 }
 
-fn iterator(){
-    print_example_title("13.6 迭代器");
+fn iterator_adaptors(){
+    print_example_title("13.6 迭代器适配器");
 
-    //迭代器基础
-    iterator_basics();
+    // 常用适配器
+    common_adaptors();
 
-    //Iterator trait和next方法
-    iterator_demonstration();
+    // 链式调用
+    chaining_adaptors();
 
-    // 消费迭代器的方法
-    iterator_sum();
-
-    //产生其他迭代器的方法
-    other_creating_iterators();
-
-    //使用闭包获取环境
-    filters_by_size();
-
-    //实现Iterator trait来创建自定义迭代器
-    impl_iterator_trait();
+    // 复杂的适配器组合
+    complex_adaptor_combinations();
 
     pause();
 }
-
-fn iterator_basics(){
-    println!("\n{}", "迭代器基础：".blue().bold());
+fn common_adaptors(){
+    println!("\n{}","常用适配器: ".blue().bold());
 
     let v1=vec![1,2,3];
 
-    //for循环中的迭代器
-    println!("使用for循环: ");
-    for item in &v1{
-        println!("  项: {}", item);
-    }
+    //map -转换每个元素
+    let v2: Vec<_>=v1.iter().map(|x|x+1).collect();
+    println!("map结果: {:?}",v2);
 
-    //手动使用迭代器
-    println!("\n手动使用迭代器: ");
-    let v1_iter=v1.iter();
 
-    for item in v1_iter{
-       println!("  项: {}", item);
-    }
-
-    //迭代器是惰性的
-    let v2=vec![1,2,3];
-    let v2_iter=v2.iter();//这里不做任何工作
-
-    println!("\n迭代器是惰性的，直到使用时才开始工作");
-    for item in v2_iter{
-        println!("  惰性项: {}", item);
-    }
 }
 
 fn iterator_demonstration(){
