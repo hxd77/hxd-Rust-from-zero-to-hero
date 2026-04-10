@@ -393,7 +393,9 @@ fn shared_data_structures(){
     let a=Rc::new(Cons(2,Rc::new(Cons(3,Rc::new(Nil)))));
     println!("a的引用计数: {}", Rc::strong_count(&a));
 
-    let b=Cons(3,Rc::)
+    let b=Cons(3,Rc::clone(&a)); //克隆a所包含的Rc<List>  
+    println!("创建b后a的引用计数: {}", Rc::strong_count(&a));
+
 
 
 
