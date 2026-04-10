@@ -1,6 +1,7 @@
 use std::any::Any;
 use std::arch::x86_64::_mm_pause;
 use std::ops::Deref;
+use std::rc::Rc;
 use utils::*;
 use colored::Colorize;
 
@@ -366,6 +367,36 @@ fn rc_smart_pointer(){
     shared_data_structures();
 
     pause();
+}
+
+fn rc_basics(){
+    println!("\n{}","Rc基础: ".blue().bold());
+
+    let data=Rc::new(String::from("共享数据"));
+    println!("初始引用计数: {}",Rc::strong_count(&data));
+
+    {
+        let data2=Rc::clone(&data);
+
+    }
+}
+
+fn shared_data_structures(){
+    println!("\n{}","共享数据结构: ".blue().bold());
+
+    #[derive(Debug)]
+    enum List{
+        Cons(i32,Rc<List>),
+        Nil,
+    }
+    use List::{Cons, Nil};
+    let a=Rc::new(Cons(2,Rc::new(Cons(3,Rc::new(Nil)))));
+    println!("a的引用计数: {}", Rc::strong_count(&a));
+
+    let b=Cons(3,Rc::)
+
+
+
 }
 #[allow(dead_code)]
 fn main(){
