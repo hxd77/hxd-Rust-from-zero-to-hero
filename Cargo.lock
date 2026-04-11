@@ -47,6 +47,7 @@ name = "chapter15_smart_pointers"
 version = "0.1.0"
 dependencies = [
  "colored",
+ "setting",
  "utils",
 ]
 
@@ -114,6 +115,12 @@ dependencies = [
  "colored",
  "utils",
 ]
+
+[[package]]
+name = "setting"
+version = "0.2.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "302e250ddab73d350789ab155ed1ab6e14ab94d7296905288f2625322c5bd36f"
 
 [[package]]
 name = "utils"

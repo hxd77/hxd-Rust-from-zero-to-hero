@@ -1,5 +1,6 @@
 use std::any::Any;
 use std::arch::x86_64::_mm_pause;
+use std::cell::{Ref, RefCell};
 use std::ops::Deref;
 use std::rc::Rc;
 use utils::*;
@@ -369,16 +370,34 @@ fn rc_smart_pointer(){
     pause();
 }
 
-fn rc_basics(){
-    println!("\n{}","Rc基础: ".blue().bold());
+fn rc_basics() {
+    println!("\n{}", "Rc基础：".blue().bold());
 
-    let data=Rc::new(String::from("共享数据"));
-    println!("初始引用计数: {}",Rc::strong_count(&data));
+    let data = Rc::new(String::from("共享数据"));
+    println!("初始引用计数: {}", Rc::strong_count(&data));
 
     {
-        let data2=Rc::clone(&data);
+        let data2 = Rc::clone(&data);
+        println!("克隆后引用计数: {}", Rc::strong_count(&data));
+        println!("数据内容: {}", data2);
 
+        {
+            let data3 = Rc::clone(&data);
+            println!("再次克隆后引用计数: {}", Rc::strong_count(&data));
+            println!("数据内容: {}", data3);
+        }
+
+        println!("内层作用域结束，引用计数: {}", Rc::strong_count(&data));
     }
+
+    println!("外层作用域结束，引用计数: {}", Rc::strong_count(&data));
+    println!("数据内容: {}", data);
+
+    println!("\nRc特点:");
+    println!("- 允许多个所有者");
+    println!("- 只读共享");
+    println!("- 引用计数为0时自动释放");
+    println!("- 不是线程安全的");
 }
 
 fn shared_data_structures(){
@@ -393,13 +412,207 @@ fn shared_data_structures(){
     let a=Rc::new(Cons(2,Rc::new(Cons(3,Rc::new(Nil)))));
     println!("a的引用计数: {}", Rc::strong_count(&a));
 
-    let b=Cons(3,Rc::clone(&a)); //克隆a所包含的Rc<List>  
+    let b=Cons(3,Rc::clone(&a)); //克隆a所包含的Rc<List>
     println!("创建b后a的引用计数: {}", Rc::strong_count(&a));
 
+    let c =Cons(4,Rc::clone(&a)); //克隆a所包含的Rc<List>
+    println!("创建c后a的引用计数: {}", Rc::strong_count(&a));
 
+    println!("列表a: {:?}", a);
+    println!("列表b: {:?}", b);
+    println!("列表c: {:?}", c);
 
+    //图结构示例
+    #[derive(Debug)]
+    struct Node{
+        value:i32,
+        children:Vec<Rc<Node>>,
+    }
 
+     let leaf1=Rc::new(Node{
+        value:1,
+         children:vec![],
+    });
+
+    let leaf2=Rc::new(Node{
+        value:2,
+        children:vec![],
+    });
+
+    let root=Node{
+        value:0,
+        children:vec![Rc::clone(&leaf1), Rc::clone(&leaf2)],
+    };
+    println!("图结构根节点: {:?}", root);
+    println!("leaf1引用计数: {}", Rc::strong_count(&leaf1));
+    println!("leaf2引用计数: {}", Rc::strong_count(&leaf2));
 }
+
+fn refcell_smart_pointer(){
+    print_example_title("15.5 RefCell<T> - 内部可变性");
+
+    //RefCell基础
+    refcell_basics();
+
+    //运行时借用检查
+    runtime_borrow_checking();
+
+    pause();
+}
+
+fn refcell_basics(){
+    println!("\n{}","RefCell基础: ".blue().bold());
+
+    let data=RefCell::new(5);
+
+    //不可变借用
+    {
+        let borrowed=data.borrow();
+        println!("借用的值: {}", *borrowed);
+        // let borrowed2 = data.borrow(); // 可以有多个不可变借用
+    }
+
+    //可变借用
+    {
+        let mut borrowed = data.borrow_mut();
+        *borrowed += 10;
+        println!("修改后的值: {}", *borrowed);
+        // let borrowed2 = data.borrow(); // 编译通过，但运行时会panic
+    }
+
+    println!("最终值: {}", data.borrow());
+
+    println!("\nRefCell特点:");
+    println!("- 内部可变性模式");
+    println!("- 运行时借用检查");
+    println!("- 单线程使用");
+    println!("- 违反借用规则会panic");
+}
+
+fn runtime_borrow_checking(){
+    println!("\n{}", "运行时借用检查：".blue().bold());
+
+    let data=RefCell::new(vec![1,2,3]);
+
+    //正确的使用(不可变借用)
+    {
+        let borrowed=data.borrow();
+        println!("读取数据: {:?}",*borrowed);
+    }
+
+    {//(可变借用)
+        let mut borrowed=data.borrow_mut();
+        borrowed.push(4);
+        println!("修改数据: {:?}",*borrowed);
+    }
+
+    //模拟内部可变性的典型用例
+    #[derive(Debug)]
+    struct MockMessenger {
+        sent_messages: RefCell<Vec<String>>,
+    }
+    impl MockMessenger {
+        fn new() -> MockMessenger {
+            MockMessenger {
+                sent_messages: RefCell::new(vec![]),
+            }
+        }
+
+        fn send(&self, message: &str) {
+            self.sent_messages.borrow_mut().push(String::from(message));
+        }
+
+        fn get_messages(&self) -> Vec<String> {
+            self.sent_messages.borrow().clone()
+        }
+    }
+
+    let messenger=MockMessenger::new();
+    messenger.send("第一条消息");
+    messenger.send("第二条消息");
+
+    println!("发送的消息: {:?}", messenger.get_messages());
+
+    println!("\n内部可变性的使用场景:");
+    println!("- 测试时的mock对象");
+    println!("- 需要修改不可变引用中的数据");
+    println!("- 实现某些设计模式");
+}
+
+fn rc_refcell_combination(){
+    print_example_title("15.6 Rc<T> 和 RefCell<T> 结合");
+
+    //多所有者可变数据
+    multi_owner_mutable_data();
+
+    pause();
+}
+
+fn multi_owner_mutable_data(){
+    println!("\n{}", "多所有者可变数据：".blue().bold());
+
+    #[derive(Debug)]
+    enum List{
+        Cons(Rc<RefCell<i32>>, Rc<List>),
+        Nil,
+    }
+    use List::{Cons, Nil};
+
+    let value=Rc::new(RefCell::new(5));
+    let a=Rc::new(Cons(Rc::clone(&value),Rc::new(Nil))); //在a中用包含value的Cons成员创建了一个List
+
+    let b=Cons(Rc::new(RefCell::new(6)),Rc::clone(&a));
+    let c=Cons(Rc::new(RefCell::new(10)),Rc::clone(&a));
+
+    println!("修改前:");
+    println!("a: {:?}", a);
+    println!("b: {:?}", b);
+    println!("c: {:?}", c);
+
+    // 修改共享的值
+    *value.borrow_mut() += 10;
+
+    println!("\n修改后:");
+    println!("a: {:?}", a);
+    println!("b: {:?}", b);
+    println!("c: {:?}", c);
+
+    //实际应用: 共享配置
+    #[derive(Debug)]
+    struct Config{
+        setting:Rc<RefCell<String>>,
+    }
+
+    impl Config {
+        fn new(initial: &str) -> Self {
+            Config {
+                setting: Rc::new(RefCell::new(String::from(initial))),
+            }
+        }
+        
+        fn get_setting(&self) -> String {
+            self.setting.borrow().clone()
+        }
+        
+        fn update_setting(&self,new_setting:&str){
+            *self.setting.borrow_mut() = String::from(new_setting);
+        }
+        
+        fn share(&self)->Rc<RefCell<String>>{Rc::clone(&self.setting)}
+    }
+    
+    let config=Config::new("初始设置");
+    let shared_setting=config.share();
+
+    println!("\n配置管理示例:");
+    println!("初始设置: {}", config.get_setting());
+
+    config.update_setting("新设置");
+    println!("更新后设置: {}", config.get_setting());
+    println!("共享设置: {}", shared_setting.borrow());
+}
+
+
 #[allow(dead_code)]
 fn main(){
     run();
