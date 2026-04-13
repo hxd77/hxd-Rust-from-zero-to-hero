@@ -2,7 +2,7 @@ use std::any::Any;
 use std::arch::x86_64::_mm_pause;
 use std::cell::{Ref, RefCell};
 use std::ops::Deref;
-use std::rc::Rc;
+use std::rc::{Rc, Weak};
 use utils::*;
 use colored::Colorize;
 
@@ -612,6 +612,42 @@ fn multi_owner_mutable_data(){
     println!("共享设置: {}", shared_setting.borrow());
 }
 
+fn circular_references(){
+    print_example_title("15.7 循环引用和内存泄露");
+
+    //循环引用问题
+    circular_reference_problem();
+
+    pause();
+}
+
+fn circular_reference_problem(){
+    println!("\n{}","循环引用问题: ".blue().bold());
+
+    #[derive(Debug)]
+    struct Node{
+        value:i32,
+        parent:RefCell<Weak<Node>>,
+        children:RefCell<Vec<Rc<Node>>>,
+    }
+
+    impl Node{
+        fn new(value:i32)->Rc<Node>{
+            Rc::new(Node{
+                value,
+                parent: RefCell::new(Weak::new()),
+                children: RefCell::new(vec![]),
+            })
+        }
+
+        fn add_child(parent:&Rc<Node>,child:Rc<Node>){
+            *child
+        }
+
+
+    }
+
+}
 
 #[allow(dead_code)]
 fn main(){
